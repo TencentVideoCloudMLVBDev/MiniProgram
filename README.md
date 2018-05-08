@@ -129,7 +129,7 @@ RTCRoom是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的�
 https://您自己的域名/roomservice/
 ```
 
-##开发者资源
+## 开发者资源
 * 小程序
 	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84.md) - 小程序项目结构
 	- [rtc-room标签](https://cloud.tencent.com/document/product/454/15364) - 用于双人、多人会话场景
