@@ -1,0 +1,6 @@
+<import src='./gridtemplate/gridtemplate.wxml'/>
+<view class='conponent-box'>
+    <view styles="width:100%;height=100%;" wx:if="{{template=='1v3' || template=='1v1'}}">
+        <template is='gridtemplate' data="{{pushURL, aspect, minBitrate, maxBitrate, beauty, muted, debug, members}}"/>
+    </view>
+</view>

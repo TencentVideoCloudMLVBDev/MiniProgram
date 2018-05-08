@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "直播体验室",
+    "usingComponents": {
+        "live-room": "/pages/components/live-room/liveroom"
+    }
+}

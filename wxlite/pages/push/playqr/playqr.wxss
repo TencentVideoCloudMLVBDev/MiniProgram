@@ -1,0 +1,15 @@
+.container-box {
+  background:-webkit-gradient(linear, 0% 0%, 0% 80%,from(#061c36), to(#12161d));
+  height: calc(100vh - 70px);
+  overflow: auto;
+  padding-bottom: 70px;
+}
+
+.qrcode {
+  position: absolute;
+  width: 686rpx;
+  height: 686rpx;
+  top: 50%;
+  left: 50%;
+  margin: -343rpx 0 0 -343rpx;
+}

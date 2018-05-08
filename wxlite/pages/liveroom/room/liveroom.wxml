@@ -1,0 +1,24 @@
+<view class='container-box'>
+
+
+
+    <live-room id="id_liveroom" wx:if="{{showLiveRoom}}" roomid="{{roomID}}" role="{{role}}" roomname="{{roomName}}" pureaudio="{{pureAudio}}" debug="{{debug}}" muted="{{muted}}" beauty="{{beauty}}" template="vertical1v3" bindRoomEvent="onRoomEvent">
+
+    </live-room>
+
+   <view wx:if="{{role == 'presenter' || linked}}" class='comment-box'>
+        <scroll-view scroll-y scroll-into-view="{{toview}}" class='comment'>
+            <view>
+                <view class='comment-detail' wx:for="{{comment}}">
+                    <view wx:if="{{item.name}}" class='color-blue'>{{item.name}} {{item.time}}</view>
+                    <view class="{{item.name? '' : 'color-org'}}">{{item.content}}</view>
+                </view>
+            </view>
+            <view id='scroll-bottom' wx:if="{{toview}}"></view>
+        </scroll-view>
+        <view class='comment-input'>
+            <input value="{{inputMsg}}" maxlength="50" bindinput='bindInputMsg' placeholder="输入文字内容" confirm-type="send" bindconfirm="sendComment" cursor-spacing="5" />
+        </view>
+    </view>
+
+</view>

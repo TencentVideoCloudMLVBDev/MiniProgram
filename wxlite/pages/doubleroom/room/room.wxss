@@ -1,0 +1,66 @@
+.container-box {
+  background-image: url(https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png);
+  background-color: #333;
+  background-repeat:no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+.img-box {
+  position: relative;
+  display:inline-block;
+  height: 10vh;
+  width: 13.6vw;
+  left:22.8vw;
+  vertical-align: middle;
+}
+.img-box image {
+  position: absolute;
+  width: 8vw;
+  height: 8vw;
+  top: 1vh; 
+  left: 2.8vw;
+}
+.img-box image :active{
+  opacity:0.55;
+}
+.img-box text {
+  position: absolute;
+  color: #ffffff;
+  width: 100%;
+  font-size:10px;
+  top: 10vw;
+  text-align: center;
+}
+.operate {
+  margin-top: 2vh;
+}
+.comment-box {
+  position: relative;
+  width: 100vw;
+  height: calc(91vh - 72.83vw);
+  margin-top: 2vw;
+}
+.comment {
+  width: 100vw;
+  height: calc(90vh - 80.33vw - 1.4rem);
+  font-size: 13px;
+
+}
+.comment .comment-detail {
+  padding: 5px 20px;
+  color: #999;
+}
+.color-blue {
+  color: #00ecfe;
+}
+.color-org {
+  color: #fe9500;
+}
+.comment-input {
+  position: absolute;
+  bottom: 0;
+  width: 90vw; 
+  background-color: #fff;
+  color: #b8b8b8;
+  padding: 5vw 5vw;
+}

@@ -1,0 +1,19 @@
+<!--pages/play/play.wxml-->
+<view style="width:100%;height: 100%; background-color: black;">
+   <view hidden="{{playing}}" style="width:100%; height:110rpx;" >
+    <input style="color:#ffffff;background-color: #151922; width:calc(100% - 120rpx); border-radius:8rpx; height:70rpx;display:inline-block; margin-left:20rpx; margin-right:10px;margin-top:20rpx;padding-left:10rpx" placeholder-style="font-size:30rpx;color:#ffffff;opacity: 0.55;" placeholder="请输入或扫码填充播放地址" focus="{{focus}}" bindtap='onInputTap'  bindblur='onBlur' value="{{playUrl}}"></input>
+    <image style="width: 60rpx; height: 60rpx;display:inline-block; position:absolute;right:20rpx;margin-top:25rpx;" src="../Resources/QR_code.png" bindtap='onScanQR'></image>
+  </view> 
+  <view style="width:100%;height:{{playing?'100%':'calc(100% - 110rpx)'}};position:relative;">
+    <video
+      style="width:100%;height:100%;position:absolute;"
+      id="video-vodPlayer"
+      src="{{playUrl}}" 
+      custom-cache="{{false}}"
+      bindplay="onPlay"
+      bindended="onEnded"
+      bindpause="onPause"
+      bindfullscreenchange="onFullScreenChange">
+    </video> 
+  </view>
+</view>

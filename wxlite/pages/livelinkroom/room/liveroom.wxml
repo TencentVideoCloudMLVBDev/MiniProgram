@@ -1,0 +1,57 @@
+<view class='container-box'>
+        <view style="display: {{sketchpadSetFullScreen ? 'none' : 'block'}}; width: 100vw; height: fit-content;">
+            <liveroom id="id_liveroom" wx:if="{{showLiveRoom}}" roomid="{{roomID}}" role="{{role}}" roomname="{{roomName}}" pureaudio="{{pureAudio}}" debug="{{debug}}" muted="{{muted}}" beauty="{{beauty}}" template="1v3" bindRoomEvent="onRoomEvent">
+            </liveroom>
+        </view>
+
+        <view class='comment-box' style="display:{{showSketachpad ? 'none': 'block'}}">
+            <!--<view class='circle' style='position:absolute; top: 1vw; right: 1vw; z-index: 999; ' bindtap='showSketachpad'>白板</view>-->
+            <view class='switchtab'>
+                <view style='position:relative;display:inline-block;width:fit-content;height:fit-content;vertical-align: middle;'bindtap='showComment'>
+                    <view style="{{!showSketachpad?'position: relative;font-size:16px;color:#006eff;':'position: relative;font-size:16px;'}}">课堂聊天</view>
+                    <view style="{{!showSketachpad?'width:100%;height:6rpx;background:#006eff;':'width:100%;height:6rpx;'}}"></view>
+                </view>
+                <view style='position:relative;display:inline-block;width:fit-content;height:fit-content;vertical-align: middle;margin-left:20px' bindtap='showSketachpad'>
+                    <view style="{{showSketachpad?'position: relative;font-size:16px;color:#006eff;':'position: relative;font-size:16px;'}}">课堂白板</view>
+                    <view style="{{showSketachpad?'width:100%;height:6rpx;background:#006eff;':'width:100%;height:6rpx;'}}"></view>
+                </view>
+            </view>
+            <view style='width:100%;height:2rpx;background:#dddddd;margin-top:33px'></view>
+            <scroll-view scroll-y scroll-into-view="{{toview}}" class='comment'>
+                <view>
+                    <view class='comment-detail' wx:for="{{comment}}">
+                        <view wx:if="{{item.name}}" class='color-blue'>{{item.name}} {{item.time}}</view>
+                        <view class="{{item.name? '' : 'color-org'}}">{{item.content}}</view>
+                    </view>
+                </view>
+                <view id='scroll-bottom' wx:if="{{toview}}"></view>
+            </scroll-view>
+            <view class='comment-input'>
+                <input value="{{inputMsg}}" maxlength="50" bindinput='bindInputMsg' placeholder="输入文字内容" confirm-type="send" bindconfirm="sendComment" cursor-spacing="5" />
+                <!-- <button bindtap="sendComment">发送</button>  -->
+            </view>
+        </view>
+
+        <view class='{{sketchpadSetFullScreen ? "comment-box-fullscreen" : "comment-box"}}' style="display:{{!showSketachpad ? 'none': 'block'}}; background-color: #FFFFFF;">
+            <sketchpad class="sketchpad" addData="{{sketchpadData}}" canDraw="{{canDraw}}" horizontal="{{!sketchpadSetFullScreen}}" height="{{ sketchpad.height }}" width="{{ sketchpad.width }}">
+                <!--<cover-view hidden='{{sketchpadSetFullScreen}}' class='circle' style='position:absolute; top: 1vw; right: 1vw;' bindtap='showComment'>IM</cover-view>-->
+                <cover-view class="{{sketchpadSetFullScreen? 'fullscreen-box-fullscreen' : 'fullscreen-box-normal'}}">
+                    <cover-view class="{{sketchpadSetFullScreen ? 'fullscreen-control-fullscreen':'fullscreen-control'}}">
+                        <cover-image style="z-index: 999; width:30px; height:30px; position: relative; margin:5% auto auto auto" src="{{!sketchpadSetFullScreen ? '/pages/Resources/fullscreen.png': '/pages/Resources/smallscreen.png'}}" bindtap="tabToggleScetchpadFullScreen">
+                        </cover-image>
+                    </cover-view>
+                </cover-view>
+            </sketchpad>
+            <view class='switchtab' hidden='{{sketchpadSetFullScreen}}'>
+                <view style='position:relative;display:inline-block;width:fit-content;height:fit-content;vertical-align: middle;'bindtap='showComment'>
+                    <view style="{{!showSketachpad?'position: relative;font-size:16px;color:#006eff;':'position: relative;font-size:16px;'}}">课堂聊天</view>
+                    <view style="{{!showSketachpad?'width:100%;height:6rpx;background:#006eff;':'width:100%;height:6rpx;'}}"></view>
+                </view>
+                <view style='position:relative;display:inline-block;width:fit-content;height:fit-content;vertical-align: middle;margin-left:20px' bindtap='showSketachpad'>
+                    <view style="{{showSketachpad?'position: relative;font-size:16px;color:#006eff;':'position: relative;font-size:16px;'}}">课堂白板</view>
+                    <view style="{{showSketachpad?'width:100%;height:6rpx;background:#006eff;':'width:100%;height:6rpx;'}}"></view>
+                </view>
+            </view>
+            <view style='width:100%;height:2rpx;background:#dddddd;margin-top:33px' hidden='{{sketchpadSetFullScreen}}'></view>
+        </view>
+</view>

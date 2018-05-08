@@ -1,0 +1,82 @@
+<!--pages/push/push.wxml-->
+<view style="width:100%;height: 100%; background-color: black;">
+  <view  wx:if="{{!playing}}" style="width:100%; height:110rpx;" >
+    <input style="color:#ffffff; background-color: #151922; width:calc(100% - 200rpx); border-radius:8rpx;height:70rpx;display:inline-block;  position:absolute;left:20rpx;;margin-top:20rpx;padding-left:10rpx" placeholder-style="font-size:30rpx;color:#ffffff;opacity: 0.55;" placeholder="请输入或扫码填充推流地址" focus="{{focus}}" bindtap='onInputTap' bindinput="onInputChange" value="{{pushUrl}}"></input>
+    <image style="width: 60rpx; height: 60rpx;display:inline-block; position:absolute;right:95rpx;margin-top:25rpx;" src="../Resources/new.png" bindtap='onNewUrlClick'></image>
+    <image style="width: 60rpx; height: 60rpx;display:inline-block; position:absolute;right:20rpx;margin-top:25rpx;" src="../Resources/QR_code.png" bindtap='onScanQR'></image>
+  </view>
+
+  <view style="width:100%;height:{{playing?'100%':'calc(100% - 110rpx)'}};">
+    <live-pusher
+      style="width:100%; height: 100%;"
+      id="camera-push"
+      mode="{{mode}}"
+      orientation="{{orientation}}"
+      beauty="{{beauty}}"
+      whiteness="{{whiteness}}"
+      muted="{{muted}}"
+      waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg"
+      background-mute="{{backgroundMute}}"
+      url="{{pushUrl}}" 
+      enable-camera="{{enableCamera}}"
+      debug="{{debug}}"
+      hidden="{{hide}}"
+      bindstatechange="onPushEvent">
+
+  
+       <cover-image hidden="{{playing}}" style="width:100%; height: 100%; position:absolute;" src="https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png"></cover-image> 
+
+      <!-- 垂直方向的按钮 -->
+       <cover-view style="width:40px; height: 50px; position:absolute;bottom:155px;margin-left:calc(13 * 100% / 14 - 20px)">       
+        <cover-image style="display:inline-block;position: absolute;width: 30px; height: 30px; margin-left:5px; " src="../Resources/push_qr.png" bindtap='onPlayQRClick'></cover-image>
+        <cover-view class='bottom_text'>扫码播放</cover-view>
+      </cover-view> 
+      <!-- <canvas style="width:126px; height: 120px; position:absolute;bottom:140px;margin-left:calc(13 * 100% / 14 - 300rpx)" canvas-id='play-qr-tips' src='../Resources/qr_tips.png' hidden='{{!showPlayQR}}'>       
+         <canvas style="width: 120px; height: 120px;position:absolute;margin-left:5px;margin-top:5px" canvas-id='play-qr-code'></canvas> 
+      </canvas> -->
+      <cover-view style="width:30px; height: 50px; position:absolute;bottom:90px;margin-left:calc(13 * 100% / 14 - 15px)">       
+         <cover-image class="bottom_button" src="../Resources/{{debug?'log':'log2'}}.png" bindtap='onLogClick'></cover-image> 
+        <cover-view class='bottom_text'>日志</cover-view>
+      </cover-view>
+
+      <cover-view style="width:65px; height: 115px; position:absolute;bottom:90px;margin-left:calc(50% - 32px)" hidden='{{!showHDTips}}'>       
+        <cover-image src="../Resources/hd_tips.png"></cover-image>
+        <cover-view style="width:100%; font-size:10px; color: #ffffff;position:absolute;bottom:20px;margin-left:calc(50% - 32px);text-align: center;" data-mode="SD" bindtap='onModeClick'>标清</cover-view>
+        <cover-view style="width:100%; font-size:10px; color: #ffffff;position:absolute;bottom:55px;margin-left:calc(50% - 32px);text-align: center;" data-mode="HD" bindtap='onModeClick'>高清</cover-view>
+        <cover-view style="width:100%; font-size:10px; color: #ffffff;position:absolute;bottom:90px;margin-left:calc(50% - 32px);text-align: center;" data-mode="FHD" bindtap='onModeClick'>超清</cover-view>
+      </cover-view>
+
+      <!-- 水平方向的按钮 -->
+      <cover-view wx:if="{{!playing || playing}}" style="width:100%; height: 50px; position:absolute;bottom:30px;" >
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{playing?'suspend':'start'}}.png" bindtap='onPushClick'></cover-image>
+        <cover-view class='bottom_text'>推流</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/camera.png" bindtap='onSwitchCameraClick'></cover-image>
+        <cover-view class='bottom_text'>翻转</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{beauty == 0 ? 'beauty-dis':'beauty'}}.png" bindtap='onBeautyClick'></cover-image>
+        <cover-view class='bottom_text'>美颜</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{mode == 'HD'? 'HD':mode == 'FHD'?'super':'SD'}}.png" bindtap='onSwitchMode'></cover-image>
+        <cover-view class='bottom_text'>{{mode == 'HD'? '高清':mode == 'FHD'?'超清':'标清'}}</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{muted?'mic-dis':'mic'}}.png" bindtap='onMuteClick'></cover-image>
+        <cover-view class='bottom_text'>声音</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{enableCamera?'off':'camera-dis'}}.png" bindtap='onEnableCameraClick'></cover-image>
+        <cover-view class='bottom_text'>摄像头</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{orientation == 'vertical'?'portrait':'landscape'}}.png"  bindtap='onOrientationClick'></cover-image>
+        <cover-view class='bottom_text'>{{orientation == 'vertical'?'竖屏':'横屏'}}</cover-view>
+      </cover-view>
+      </cover-view>
+    </live-pusher> 
+  </view>
+</view>

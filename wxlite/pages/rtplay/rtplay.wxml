@@ -1,0 +1,47 @@
+<!--pages/rtplay/rtplay.wxml-->
+<view style="width:100%;height: 100%; background-color: black;">
+   <view wx:if="{{!playing}}" style="width:100%; height:110rpx;" >
+    <input style="color:#ffffff; background-color: #151922; width:calc(100% - 200rpx); border-radius:8rpx;height:70rpx;display:inline-block; position:absolute;left:20rpx;margin-top:20rpx;padding-left:10rpx" placeholder-style="font-size:30rpx;color:#ffffff;opacity: 0.55;" placeholder="请输入或扫码填充播放地址" focus="{{focus}}" bindtap='onInputTap' bindblur='onBlur' value="{{playUrl}}"></input>
+    <image style="width: 60rpx; height: 60rpx;display:inline-block; position:absolute;right:95rpx;margin-top:25rpx;" src="../Resources/new.png" bindtap='onNewUrlClick'></image>
+    <image style="width: 60rpx; height: 60rpx;display:inline-block; position:absolute;right:20rpx;margin-top:25rpx;" src="../Resources/QR_code.png" bindtap='onScanQR'></image>
+  </view> 
+  <view style="width:100%;height:{{playing?'100%':'calc(100% - 110rpx)'}};position:relative;">
+    <live-player
+      style="width:100%;height:100%;position:absolute;"
+      id="video-livePlayer"
+      mode="RTC"
+      orientation="{{orientation}}"
+      muted="{{muted}}"
+      background-mute="{{backgroundMute}}"
+      object-fit="{{objectFit}}"
+      src="{{playUrl}}" 
+      debug="{{debug}}"
+      bindstatechange="onPlayEvent"
+      bindfullscreenchange="onFullScreenChange">
+
+      <cover-image hidden="{{playing}}" style="width:100%; height: 100%; position:absolute;" src="https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png"></cover-image>
+      <cover-view wx:if="{{!debug || exterFlag}}" style="width:100%; height: 50px; position:absolute; bottom:30px;padding-left:calc(100% / 7);" >
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{playing?'suspend':'start'}}.png" bindtap='onPlayClick'></cover-image>
+        <cover-view class='bottom_text'>播放</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{orientation == 'vertical'?'portrait':'landscape'}}.png" bindtap='onOrientationClick'></cover-image>
+        <cover-view class='bottom_text'>{{orientation == 'vertical'?'竖屏':'横屏'}}</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{debug?'log':'log2'}}.png" bindtap='onLogClick'></cover-image>
+        <cover-view class='bottom_text'>日志</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{muted?'sound-dis':'sound'}}.png" bindtap='onMuteClick'></cover-image>
+        <cover-view class='bottom_text'>声音</cover-view>
+      </cover-view>
+      <cover-view class='bottom_box'>       
+        <cover-image class="bottom_button" src="../Resources/{{objectFit == 'contain'?'adjust':'fill'}}.png" bindtap='onObjectfitClick'></cover-image>
+        <cover-view class='bottom_text'>{{objectFit == 'contain'?'适应':'填充'}}</cover-view>
+      </cover-view>
+      </cover-view> 
+    </live-player> 
+  </view>
+</view>

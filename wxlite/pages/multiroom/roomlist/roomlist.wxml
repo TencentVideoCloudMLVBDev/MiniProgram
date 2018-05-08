@@ -1,0 +1,17 @@
+<view class='container-box'>
+  <view class='extext' wx-if="{{roomList.length}}">选择房间点击进入</view>
+  <view class='extext no-room' wx-if="{{!roomList.length}}">
+    <view>当前没有任何房间</view>
+    <view>请点击新建房间</view>
+  </view>
+  <view wx:for="{{roomList}}" class="list-box" bindtap="goRoom" data-roomid="{{item.roomID}}" data-roomname="{{item.roomInfo}}" data-num="{{item.pushers.length}}"> 
+    <view>
+        <view class='list-info'>房间名: {{item.roomInfo}}</view>
+        <view class='list-info'>房间ID: {{item.roomID}}</view>
+        <view class='list-info'>在线人数: {{item.pushers.length}}人</view> 
+    </view>
+  </view> 
+</view>
+<view class='bottom-btn'> 
+  <button type="primary" bindtap="create" hover-class="none">创建房间</button>
+</view> 

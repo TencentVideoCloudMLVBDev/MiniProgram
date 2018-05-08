@@ -1,0 +1,66 @@
+/* pages/main/main.wxss */
+.mainUI {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(https://mc.qcloudimg.com/static/img/fae52dbeb369a1f6a6b91e80a60485cf/bg.png);
+  background-color: #1F2531;
+  background-repeat:no-repeat;
+  background-size: cover;
+}
+.tips {
+  color: #ffffff;
+  font-size: 12px;
+  text-align: center;
+  padding: 5vw 0 5vw;
+}
+.guide-box {
+  text-align: center;
+}
+.guide {
+  display: inline-block;
+  width: 30vw;
+  height: 30vw;
+  background-color: rgba(0, 0, 0, 0.55);
+  text-align: center;
+  margin: 1.5px;
+  vertical-align: top;
+}
+.guide-nomore {
+  display: inline-block;
+  width: 30vw;
+  height: 30vw;
+  text-align: center;
+  margin: 1.5px;
+  vertical-align: top;
+}
+.guide-nomore-bk {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.guide_icon {
+  display: block;
+  width: 36px; 
+  height: 36px; 
+  margin:20px auto 0;
+}
+.guide_label {
+  display: block;
+  margin-top: 10px;
+  color: #CFE4FF;
+  font-size: 14px;
+}
+.guide_nomore_label {
+  margin-top: 30px;
+  color: rgba(256, 256, 256, 0.3);
+  font-size: 14px;
+}
+.logo-box {
+  position: absolute;
+  width: 100vw;
+  bottom: 36rpx;
+  text-align: center;
+}
+.logo {
+  width: 160rpx;
+  height: 44rpx;
+}

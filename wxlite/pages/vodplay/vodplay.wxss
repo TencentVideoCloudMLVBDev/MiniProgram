@@ -1,0 +1,10 @@
+/* pages/play/play.wxss */
+
+.button_bottom
+{
+  width: 60rpx; 
+  height: 60rpx; 
+  margin-left:calc(100% / 12 - 30rpx); 
+  margin-right:calc(100% / 12 - 30rpx);
+  display:inline-block;
+}

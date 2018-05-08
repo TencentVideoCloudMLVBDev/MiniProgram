@@ -1,0 +1,79 @@
+.videoview {
+  background-repeat:no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.pusher-box {
+	position: relative; 
+	display: inline-block; 
+	overflow: hidden;
+  width: 46vw;
+	height: 61.33vw; 
+	text-align: center;
+  margin-bottom: 2vw;
+  vertical-align: top;
+}
+
+live-pusher {
+  width: 100%;
+	height: 100%; 
+}
+
+.player-box {
+	position: relative; 
+	display: inline-block; 
+	overflow: hidden;
+	width: 46vw;
+	height: 61.33vw; 
+	text-align: center;
+  margin-bottom: 2vw;
+  vertical-align: top;
+}
+.player-box:nth-child(2),.player-box:nth-child(4) {
+   margin-left: 1vw; 
+} 
+.poster {
+	position: absolute;  
+    width: 100%;
+	height: 100%; 
+	background-color: #000;
+  opacity:0.55;
+}
+.set {
+  position: absolute;
+  width: 32px;
+  height: 56px;
+  top: 50%;
+  left: 50%;
+  margin: -28px 0 0 -16px;
+}
+live-player {
+  width: 100%;
+	height: 100%; 
+}
+.character {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: 16px;
+  color: #999;
+  width: 100%;
+  height: 10vw;
+  line-height: 10vw;
+  text-align: left;
+}
+.loading {
+  position: absolute;
+  width: 100%;  
+  height: 100%; 
+}
+.loading cover-image {
+  position: absolute;
+  top: calc(50% - 15px);
+  left: calc(50% - 15px);
+  width: 30px;
+  height: 30px;
+}
+

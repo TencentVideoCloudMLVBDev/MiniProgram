@@ -1,0 +1,82 @@
+/**app.wxss**/
+@import "./weui.wxss";
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+
+body, page {
+  height: 100%;
+}
+
+page {
+    font-size: 16px;
+    background-color: #F8F8F8;
+}
+
+body, page {
+  height: 100%;
+}
+
+.weui-cells__title {
+  margin-top: 15px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.weui-label, .weui-input {
+  font-size: 17px;
+}
+
+.weui-cell_active {
+  background-color: #ececec;
+}
+
+.disabled-text {
+  color: #B2B2B2;
+}
+
+.weui-btn-area {
+  padding-bottom: 30px;
+}
+
+.weui-cells__title {
+  margin-top: 20px;
+}
+
+.weui-panel__hd:after {
+  display: none;
+}
+
+.weui-panel__bd {
+  position: relative;
+}
+
+.weui-media-box {
+  padding-top: 0;
+}
+
+.weui-panel__bd:after {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 1rpx solid #e5e5e5;
+  color: #e5e5e5;
+  left: 15px;
+}
+
+.weui-uploader__input-box {
+  margin-bottom: 4px;
+}
+
+.weui-placeholder {
+    color: #B2B2B2;
+}

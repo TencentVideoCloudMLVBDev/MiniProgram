@@ -1,0 +1,31 @@
+<view class='container-box'>
+	<view style='width:93vw;margin-left:3.5vw;padding-top:3.5vw;'> 
+    <rtc-room id="rtcroom"
+      roomID="{{roomID}}"
+      roomInfo="{{roomname}}"
+      template="1v3"
+      beauty="{{beauty}}"
+      muted="{{muted}}"
+      debug="{{debug}}"
+      bindonRoomEvent="onRoomEvent">
+    </rtc-room>
+	</view> 
+	<view class="operate">
+		<view class='img-box'>
+			<image src='../../Resources/camera{{frontCamera?"":"-gray"}}.png' bindtap="changeCamera"></image>
+			<text>翻转</text>
+		</view>
+		<view class='img-box'>
+			<image src='../../Resources/{{beauty? "beauty" : "beauty-dis"}}.png' bindtap="setBeauty"></image>
+			<text>美颜</text>
+		</view>
+		<view class='img-box'>
+			<image src='../../Resources/{{muted ? "mic-dis" : "mic"}}.png'  bindtap="changeMute"></image>
+			<text>声音</text>
+		</view>
+		<view class='img-box'>
+			<image src='../../Resources/{{debug? "log" : "log2"}}.png'  bindtap="showLog"></image>
+			<text>日志</text>
+		</view>
+	</view>
+</view>

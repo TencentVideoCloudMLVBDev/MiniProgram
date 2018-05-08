@@ -1,0 +1,3 @@
+<view class="container-box">
+  <canvas class='qrcode' canvas-id="mycanvas" />
+</view>

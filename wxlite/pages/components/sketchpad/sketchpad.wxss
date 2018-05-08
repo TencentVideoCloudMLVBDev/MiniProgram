@@ -1,0 +1,10 @@
+/* pages/sketchpad.wxss */
+.pic {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.rotate{
+	-webkit-transform: rotate(-90deg);
+	transform-origin: left top 0;
+}

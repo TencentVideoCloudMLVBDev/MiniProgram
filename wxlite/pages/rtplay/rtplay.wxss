@@ -1,0 +1,34 @@
+/* pages/rtplay/rtplay.wxss */
+
+.bottom_box
+{
+  position: relative;
+  width: 30px; 
+  height: 50px; 
+  margin-left:calc(100% / 14 - 15px); 
+  margin-right:calc(100% / 14 - 15px);
+  display:inline-block;
+}
+
+.bottom_button
+{
+  display:inline-block;
+  position: absolute;
+  width: 30px; 
+  height: 30px; 
+}
+
+.bottom_button :active{
+  opacity:0.55;
+}
+
+.bottom_text
+{
+  position: absolute;
+  display:inline-block;
+  color: #ffffff;
+  width: 100%;
+  font-size:10px;
+  bottom: 0;
+  text-align: center;
+}

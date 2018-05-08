@@ -1,0 +1,17 @@
+{
+	"client": "./wxlite",
+	"svr": "./simpleserver",
+	"miniprogramRoot": "./wxlite",
+	"qcloudRoot": "./simpleserver",
+	"appid": "xxxxxxxxxxxxx",
+	"projectname": "RTCRoomRelease_1.2.693",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"libVersion": "1.9.91",
+	"condition": {}
+}

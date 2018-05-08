@@ -1,0 +1,35 @@
+{
+    "pages": [
+        "pages/main/main",
+        "pages/push/push",
+        "pages/push/playqr/playqr",
+        "pages/play/play",
+        "pages/vodplay/vodplay",
+        "pages/rtplay/rtplay",
+        "pages/multiroom/room/room",
+        "pages/multiroom/roomlist/roomlist",
+        "pages/multiroom/roomname/roomname",
+        "pages/doubleroom/roomlist/roomlist",
+        "pages/doubleroom/room/room",
+        "pages/doubleroom/roomname/roomname",
+        "pages/liveroom/roomlist/roomlist",
+        "pages/liveroom/roomname/roomname",
+        "pages/livelinkroom/roomlist/roomlist",
+        "pages/livelinkroom/room/liveroom",
+        "pages/liveroom/room/liveroom",
+        "pages/livelinkroom/roomname/roomname",
+        "pages/webrtcroom/room/room",
+        "pages/webrtcroom/roomlist/roomlist",
+        "pages/webrtcroom/roomname/roomname"
+    ],
+    "networkTimeout": {
+        "request": 60000
+    },
+    "window": {
+        "backgroundColor": "#888",
+        "backgroundTextStyle": "dark",
+        "navigationBarBackgroundColor": "#000",
+        "navigationBarTitleText": "腾讯视频云",
+        "navigationBarTextStyle": "#fff"
+    }
+}

@@ -1,0 +1,6 @@
+.idea/
+package-lock.json
+node_modules
+demo/config.js
+demo/*.zip
+test/*.zip
