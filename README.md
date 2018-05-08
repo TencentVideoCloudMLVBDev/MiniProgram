@@ -80,11 +80,17 @@
 
 2.小程序部署
 
-下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo) 源码，将wxlite/config.js文件中的`webrtcServerUrl`修改成 *https://您自己的域名/webrtc/weapp/webrtc_room*
+下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo) 源码，将wxlite/config.js文件中的`webrtcServerUrl`修改成：
+```
+https://您自己的域名/webrtc/weapp/webrtc_room
+```
 
 3.web端部署
 
-下载 [web端](https://github.com/TencentVideoCloudMLVBDev/webrtc_pc) 源码，将component/WebRTCRoom.js文件中的`serverDomain`修改成 *https://您自己的域名/webrtc/weapp/webrtc_room*
+下载 [web端](https://github.com/TencentVideoCloudMLVBDev/webrtc_pc) 源码，将component/WebRTCRoom.js文件中的`serverDomain`修改成：
+```
+https://您自己的域名/webrtc/weapp/webrtc_room
+```
 
 ### RTCRoom解决方案（Java版） 
 
@@ -96,11 +102,17 @@ RTCRoom 是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的
 
 2.小程序部署
 
-下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo) 源码，将wxlite/config.js文件中的`serverUrl`和 `roomServiceUrl`修改成*https://您自己的域名/roomservice/*
+下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo) 源码，将wxlite/config.js文件中的`serverUrl`和 `roomServiceUrl`修改成:
+```
+https://您自己的域名/roomservice/
+```
 
 3.windows Demo部署
 
-下载 [windows web demo](https://github.com/TencentVideoCloudMLVBDev/webexe_web) 源码，将liveroom.html、double.html文件中的`RoomServerDomain`修改成*https://您自己的域名/roomservice/*
+下载 [windows web demo](https://github.com/TencentVideoCloudMLVBDev/webexe_web) 源码，将liveroom.html、double.html文件中的`RoomServerDomain`修改成:
+```
+https://您自己的域名/roomservice/
+```
 
 ### RTCRoom解决方案（NodeJS一键部署） 
 
@@ -108,32 +120,34 @@ RTCRoom是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的�
 
 1.NodeJS一键部署(包含了小程序&后台)
 
-- 下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo) 源码，根据README.md中的指引一键部署。
-
-- wxlite/config.js文件中的`serverUrl`和 `roomServiceUrl`修改成*https://您自己的域名/roomservice/*
+- 下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo) 源码，根据[一键部署指引](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2_NodeJS.md)完成部署。
 
 2.windows Demo部署
 
-下载 [windows web demo](https://github.com/TencentVideoCloudMLVBDev/webexe_web) 源码，将liveroom.html、double.html文件中的`RoomServerDomain`修改成*https://您自己的域名/roomservice/*
+下载 [windows web demo](https://github.com/TencentVideoCloudMLVBDev/webexe_web) 源码，将liveroom.html、double.html文件中的`RoomServerDomain`修改成:
+```
+https://您自己的域名/roomservice/
+```
 
 ##开发者资源
 * 小程序
-	- [项目结构](https://cloud.tencent.com/document/product/454/7873#iOS) - 小程序项目结构
-	- [RTCRoom API](https://cloud.tencent.com/document/product/454/7873#iOS) -       RTCRoom API文档，用于双人、多人会话场景，推荐使用LocalView&RemoveView组件
-	- [LiveRoom API](https://cloud.tencent.com/document/product/454/7873#iOS) -       LiveRoom API文档，用于单向音视频场景
+	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84.md) - 小程序项目结构
+	- [rtc-room标签](https://cloud.tencent.com/document/product/454/15364) - 用于双人、多人会话场景
+	- [live-room标签](https://cloud.tencent.com/document/product/454/15368) - 用于单向音视频及连麦场景
+	- [webrtc-room标签](https://cloud.tencent.com/document/product/454/16914) - 用于单向音视频场景
 	- 原生标签使用
-		- [live-pusher标签](https://cloud.tencent.com/document/product/454/12518) -       微信原生live-pusher标签使用文档
-		- [live-player标签](https://cloud.tencent.com/document/product/454/12519) -       微信原生live-player标签使用文档
-	- [常见问题](https://cloud.tencent.com/document/product/454/13037?!preview&lang=cn) -       小程序视频标签使用过程中常见问题
-* RTCRoom服务端(Java)
-	- [项目结构](https://cloud.tencent.com/document/product/454/7873#iOS) - 服务端项目结构及简介
-	- [协议文档](https://cloud.tencent.com/document/product/454/7873#iOS) - 后台协议文档
-	- [自行部署指引](https://cloud.tencent.com/document/product/454/7873#iOS) - 自己本地部署及服务端部署
-* RTCRoom服务端(NodeJS)
-	- [项目结构](https://cloud.tencent.com/document/product/454/7873#iOS) - 服务端项目结构及简介
-	- [协议文档](https://cloud.tencent.com/document/product/454/7873#iOS) - 后台协议文档
-	- [自行部署指引](https://cloud.tencent.com/document/product/454/7873#iOS) - 自己本地部署及服务端部署
+		- [live-pusher标签](https://cloud.tencent.com/document/product/454/12518) - 微信原生live-pusher标签使用文档
+		- [live-player标签](https://cloud.tencent.com/document/product/454/12519) - 微信原生live-player标签使用文档
+	- [常见问题](https://cloud.tencent.com/document/product/454/13037?!preview&lang=cn) - 小程序视频标签使用过程中常见问题
+* 企业端
+	- [WebExe](https://cloud.tencent.com/document/product/454/17004) - 小程序与Windows WebExe互通方案
+	- [WebRTC](https://cloud.tencent.com/document/product/454/17005) - 小程序与Chrome WebRTC互通方案
 * WebRTC服务端(Java)
-	- [项目结构](https://cloud.tencent.com/document/product/454/7873#iOS) - 服务端项目结构及简介
-	- [协议文档](https://cloud.tencent.com/document/product/454/7873#iOS) - 后台协议文档
-	- [自行部署指引](https://cloud.tencent.com/document/product/454/7873#iOS) - 自己本地部署及服务端部署
+	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/webrtc_server_java/blob/master/doc/protocol.md) - 服务端项目结构及简介
+	- [协议文档](https://github.com/TencentVideoCloudMLVBDev/webrtc_server_java/blob/master/doc/codeStructure.md) - 后台协议文档
+* RTCRoom服务端(Java)
+	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/rtcroom_server_java/blob/master/doc/codeStructure.md) - 服务端项目结构及简介
+	- [协议文档](https://github.com/TencentVideoCloudMLVBDev/rtcroom_server_java/blob/master/doc/protocol.md) - 后台协议文档
+* RTCRoom服务端(NodeJS)
+	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/server%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84_NodeJS.md) - 服务端项目结构及简介
+	- [协议文档](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/server%E5%8D%8F%E8%AE%AE%E6%96%87%E6%A1%A3_NodeJS.md) - 后台协议文档
