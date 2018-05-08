@@ -1,7 +1,7 @@
 <template name="vertical1v3">
     <view class="{{linkPusherInfo.url || isCaster ? 'v-full2': 'v-full'}}">
         <view wx:if="{{isCaster}}" class='v-main-video'>
-            <live-pusher wx:if="{{isCaster&&mainPusherInfo.url}}" id="pusher" mode="RTC" url="{{mainPusherInfo.url}}" min-bitrate="850" min-bitrate="1200" beauty="{{beauty}}" enable-camera="{{!pureaudio}}" muted="{{muted}}" aspect="9:16" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg"
+            <live-pusher wx:if="{{isCaster&&mainPusherInfo.url}}" id="pusher" mode="{{mode}}" url="{{mainPusherInfo.url}}" min-bitrate="850" max-bitrate="1200" beauty="{{beauty}}" enable-camera="{{!pureaudio}}" muted="{{muted}}" aspect="9:16" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg"
                 background-mute="{{true}}" debug="{{debug}}" bindstatechange="onMainPush" binderror="onMainError">
                 <cover-view class='character' style='padding: 0 5px;'>我（{{userName}}）</cover-view>
                  <cover-view class="operate">
@@ -58,7 +58,7 @@
 
     <view wx:if="{{linkPusherInfo.url || isCaster}}" class='v-sub-video-list'>
         <view class='.v-sub-video' wx:if="{{!isCaster && linkPusherInfo.url}}">
-            <live-pusher wx:if="{{!isCaster && linkPusherInfo.url}}" min-bitrate="400" min-bitrate="200" id="audience_pusher" mode="RTC" min-bitrate="900" url="{{linkPusherInfo.url}}" beauty="{{beauty}}" enable-camera="{{!pureaudio}}" muted="{{muted}}" aspect="9:16"
+            <live-pusher wx:if="{{!isCaster && linkPusherInfo.url}}" max-bitrate="300" min-bitrate="200" id="audience_pusher" mode="RTC" url="{{linkPusherInfo.url}}" beauty="{{beauty}}" enable-camera="{{!pureaudio}}" muted="{{muted}}" aspect="9:16"
                 waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" background-mute="true" debug="{{debug}}" bindstatechange="onLinkPush" binderror="onLinkError">
                 <cover-image class='character' src="/pages/Resources/mask.png"></cover-image>
                 <cover-view class='character' style='padding: 0 5px;'>我（{{userName}}）</cover-view>

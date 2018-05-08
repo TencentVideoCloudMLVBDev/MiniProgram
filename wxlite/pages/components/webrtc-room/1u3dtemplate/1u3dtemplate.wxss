@@ -1,49 +1,50 @@
-.grid.videoview {
+.1u3d.videoview {
   background-repeat:no-repeat;
   background-size: cover;
   width: 100%;
   height: 100%;
 }
 
-.grid .pusher-box {
+.1u3d .pusher-box {
 	position: relative; 
-	display: inline-block; 
+	display: block; 
 	overflow: hidden;
-  width: 46vw;
-	height: 61.33vw; 
+  width: 33.75vw;
+	height: 60vw; 
 	text-align: center;
-  margin-bottom: 2vw;
   vertical-align: top;
+  margin: 0 auto 2vw;
 }
 
-.grid live-pusher {
+.1u3d live-pusher {
   width: 100%;
 	height: 100%; 
 }
 
-.grid .player-box {
-	position: relative; 
+.1u3d .player-box {
+	display:flex;
+  justify-content: center;
+}
+
+.1u3d .player-box .player-item {
+  position: relative; 
 	display: inline-block; 
 	overflow: hidden;
-	width: 46vw;
-	height: 61.33vw; 
+  width: 16.875vw;
+	height: 30vw; 
 	text-align: center;
-  margin-bottom: 2vw;
   vertical-align: top;
+  margin: 0 4vw;
 }
-.grid .player-box:nth-child(2), .grid .player-box:nth-child(4) {
-   margin-left: 1vw; 
-} 
 
-.grid .poster {
+.1u3d .poster {
 	position: absolute;  
     width: 100%;
 	height: 100%; 
 	background-color: #000;
   opacity:0.55;
 }
-
-.grid .set {
+.1u3d .set {
   position: absolute;
   width: 32px;
   height: 56px;
@@ -52,12 +53,12 @@
   margin: -28px 0 0 -16px;
 }
 
-.grid live-player {
+.1u3d live-player {
   width: 100%;
 	height: 100%; 
 }
 
-.grid .character {
+.1u3d .character {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -69,13 +70,13 @@
   text-align: left;
 }
 
-.grid .loading {
+.1u3d .loading {
   position: absolute;
   width: 100%;  
   height: 100%; 
 }
 
-.grid .loading cover-image {
+.1u3d .loading cover-image {
   position: absolute;
   top: calc(50% - 15px);
   left: calc(50% - 15px);

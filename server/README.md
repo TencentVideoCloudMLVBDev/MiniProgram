@@ -154,113 +154,77 @@ nginx -s reload
 server
 ├── README.md
 ├── app.js
-├── double_room
+├── account
 │   ├── index.js
-│   ├── get_im_login_info.js
-│   ├── get_push_url.js
-│   ├── create_room.js
-│   ├── destroy_room.js
+│   ├── login.js
+│   └── logout.js
+├── controller
+│   ├── add_audience.js
 │   ├── add_pusher.js
-│   ├── delete_pusher.js
-│   ├── get_pushers.js
-│   ├── pusher_heartbeat.js
-│   └── get_room_list.js
-├── multi_room
-│   ├── index.js
-│   ├── get_im_login_info.js
-│   ├── get_push_url.js
 │   ├── create_room.js
-│   ├── destroy_room.js
-│   ├── add_pusher.js
+│   ├── delete_audience.js
 │   ├── delete_pusher.js
-│   ├── get_pushers.js
-│   ├── pusher_heartbeat.js
-│   └── get_room_list.js
-├── live_room
-│   ├── index.js
-│   ├── get_im_login_info.js
+│   ├── destroy_room.js
+│   ├── get_audiences.js
+│   ├── get_custom_info.js
 │   ├── get_push_url.js
-│   ├── create_room.js
-│   ├── destroy_room.js
-│   ├── add_pusher.js
-│   ├── delete_pusher.js
 │   ├── get_pushers.js
-│   ├── pusher_heartbeat.js
-│   └── get_room_list.js
-├── utils
+│   ├── get_room_list.js
 │   ├── index.js
-│   ├── get_test_pushurl.js
-│   ├── get_test_rtmpaccurl.js
-│   ├── getlogfile.js
-│   └── logfilelist.js
+│   ├── merge_stream.js
+│   ├── pusher_heartbeat.js
+│   └── set_custom_field.js
 ├── logic
+│   ├── auth.js
+│   ├── do_request.js
 │   ├── im_mgr.js
 │   ├── live_util.js
-│   ├── double_room_mgr.js
-│   ├── multi_room_mgr.js
-│   └── live_room_mgr.js
+│   ├── room_list.js
+│   └── room_mgr.js
+├── logs
+│   ├── error
+│   │   └── do_not_delete_this.log
+│   └── response
+│       └── do_not_delete_this.log
 ├── middlewares
 │   ├── bodyparser.js
 │   └── response.js
+├── node_modules
+├── routes
+│   └── index.js
+├── utils
+│   ├── get_login_info.js
+│   ├── get_test_pushurl.js
+│   ├── get_test_rtmpaccurl.js
+│   ├── getlogfile.js
+│   ├── index.js
+│   ├── logfilelist.js
+│   └── test_config.js
+├── app.js
 ├── config.js
 ├── log.js
 ├── log_config.js
-├── package.json
-├── process.json
 ├── nodemon.json
-├── qcloud.js
-└── routes
-    └── index.js
+├── package.json
+└── process.prod.json
 ```
+
 `app.js` 是 服务器端 的主入口文件，使用 Koa 框架，在 `app.js` 创建一个 Koa 实例并响应请求。
 
 `routes/index.js` 是 服务器端 的路由定义文件。
 
-`double_room` 存放 服务器端 双人房间业务逻辑的目录，`index.js` 不需要修改，他会动态的将 `double_room` 文件夹下的目录结构映射成 modules 的 Object，例如 double_room 目录中将会被映射成如下的结构：
+`controller` 是服务器端提供的业务逻辑入口，双人、多人、直播房间都通过这个目录统一转发
 
-```javascript
-// index.js 输出
-{
-  get_im_login_info: require('get_im_login_info'),
-  get_push_url: require('get_push_url'),
-  create_room: require('create_room'),
-  destroy_room: require('destroy_room'),
-  add_pusher: require('add_pusher'),
-  delete_pusher: require('delete_pusher'),
-  get_pushers: require('get_pushers'),
-  pusher_heartbeat: require('pusher_heartbeat'),
-  get_room_list: require('get_room_list')
-}
-```
+`logic` 是具体的逻辑实现目录，实现了认证、云通信、房间列表管理。
 
-`multi_room` 存放 服务器端 多人房间业务逻辑的目录，`index.js` 不需要修改，他会动态的将 `multi_room` 文件夹下的目录结构映射成 modules 的 Object。
-
-`live_room` 存放 服务器端 直播房间业务逻辑的目录，`index.js` 不需要修改，他会动态的将 `live_room` 文件夹下的目录结构映射成 modules 的 Object。
+`node_modules` 是依赖的第三方模块目录
 
 `utils` 存放 服务器端 辅助接口的目录，`index.js` 不需要修改，他会动态的将 `utils` 文件夹下的目录结构映射成 modules 的 Object。
 
-
-
-`logic/im_mgr.js` 云通信相关的处理，主要功能有：
-```
-module.exports = {
-  getSig,                      // 计算云通信 账号登录IM所需要的userSig票据   
-  createGroup,                 // 创建IM聊天室，通过云通信提供的服务端对接用的RestFul API实现
-  destroyGroup,                // 销毁IM聊天室，通过云通信提供的服务端对接用的RestFul API实现 
-  notifyPushersChange          // IM聊天室成员进入和退出系统消息通知，通过云通信提供的服务端对接用的RestFul API实现
-}
-```
-
-`logic/double_room_mgr.js` 实时音视频房间管理模块，负责`双人`视频房间的创建，销毁，增加成员，删除成员，获取房间列表，获取房间成员列表等功能函数；另外也负责房间成员的心跳检查，对超时的成员进行删除处理。
-
-`logic/multi_room_mgr.js` 实时音视频房间管理模块，负责`多人`视频房间的创建，销毁，增加成员，删除成员，获取房间列表，获取房间成员列表等功能函数；另外也负责房间成员的心跳检查，对超时的成员进行删除处理。
-
-`logic/live_room_mgr.js` 实时音视频房间管理模块，负责`直播`视频房间的创建，销毁，增加成员，删除成员，获取房间列表，获取房间成员列表等功能函数；另外也负责房间成员的心跳检查，对超时的成员进行删除处理。
-
-`logic/live_util.js` 云直播辅助函数，负责生成推流地址以及播放地址。外加一些用户ID分配和房间ID分配的功能函数。 
-
 `log.js` 后台日志模块，主要记录请求响应和错误两大类日志。请求响应日志按小时存储在`logs/response/`目录下，错误日志按小时存储在`logs/error/`目录下。最多存储7天日志。以上默认配置可以通过修改`log_config.js`来调整。
+
 log4js v2 日志配置(若是2.0以下版本请用v1 的配置具体见log_config.js文件)：
+
 ```javascript
 {
   appenders:

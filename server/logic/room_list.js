@@ -139,7 +139,13 @@ RoomMgr.prototype.addPusher = function (roomID, userID, userName, userAvatar, pu
  * 删除推流者 - 退房
  */
 RoomMgr.prototype.delPusher = function (roomID, userID) {
-  if (this.isRoomCreator(roomID, userID)) {
+  var creatorCanDestroyRoom = true;
+  if (this.name == 'double_room') {
+    creatorCanDestroyRoom = config.double_room.creatorCanDestroyRoom;
+  } else if (this.name == 'multi_room') {
+    creatorCanDestroyRoom = config.multi_room.creatorCanDestroyRoom;
+  }
+  if (this.isRoomCreator(roomID, userID) && creatorCanDestroyRoom) {
     this.delRoom(roomID)
     // notify
     immgr.destroyGroup(roomID)
@@ -148,6 +154,14 @@ RoomMgr.prototype.delPusher = function (roomID, userID) {
       var room = this.getRoom(roomID)
       if (room) {
         delete room.pushers[userID]
+        if (!creatorCanDestroyRoom) {
+          //房间没有人推流时，删除该房间
+          if (room.pushers && Object.getOwnPropertyNames(room.pushers).length <= 0) {
+            this.delRoom(roomID)
+            immgr.destroyGroup(roomID)
+            return;
+          }
+        }
         // notify
         immgr.notifyPushersChange(roomID)
       }

@@ -1,37 +1,122 @@
 .container-box {
   background-image: url(https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png);
-  background-color: #333;
+  background-color: #fff;
   background-repeat:no-repeat;
   background-size: cover;
   height: 100vh;
+  overflow: hidden;
+}
+
+.camera-box {
+  height: 58vh;
+  width:93vw;
+  margin-left:3.5vw;
+  padding-top: 2vh;
+}
+
+.operate {
+  margin-top: 1vh;
+  text-align: center;
+  height: 10vh;
+}
+
+.switchtab {
+  text-align: center;
+  background: #fff;
+  height: 4vh;
+}
+
+.switchtab .tab {
+  display: inline;
+}
+
+.switchtab .tab .text {
+  font-size: 16px;
+  color: #333;
+  border-bottom: 0.5vw solid #fff;
+  display:inline-block;
+  font-weight:700;
+  padding:0 1vw;
+  text-align:center;
+}
+
+.switchtab .tab .text.checked { 
+  color: #006eff;
+  border-bottom: 0.5vw solid #006eff;
 }
 
 .img-box {
-  position: relative;
   display:inline-block;
-  height: calc(100vh - 134.66vw);
   width: 13.6vw;
-  left:22.8vw;
-  vertical-align: middle;
+  text-align: center;
+  
 }
 .img-box image {
-  position: absolute;
+  display: inline-block;
   width: 8vw;
   height: 8vw;
-  left: 2.8vw;
-  top: calc(50vh - 75.33vw); 
 }
 .img-box image :active{
   opacity: 0.55
 }
 .img-box text {
-  position: absolute;
+  display: block;
   color: #ffffff;
   width: 100%;
   font-size:10px;
-  top: calc(50vh - 65.33vw);
   text-align: center;
 }
-.operate {
-  margin-top: 1vh;
+
+
+.im_box {
+  width: 100vw;
 }
+.im_box.hide {
+  display:none;
+}
+
+.board_box {
+  width: 100vw;
+  height: 25vh;
+}
+
+.board_box.hide {
+  display:none;
+}
+
+.comment {
+  width: 100vw;
+  font-size: 12px;
+  height: 21vh;
+}
+
+.comment .comment-detail {
+  padding: 0.2vh 2vw;
+  color: #999;
+}
+
+.color-blue {
+  color: #00ecfe;
+}
+.color-org {
+  color: #fe9500;
+}
+
+.comment-input {
+  display: block;
+  color: #b8b8b8;
+  border-top: 1px solid #ddd;
+  padding: 0 2vw;
+  height: 5vh;
+}
+
+.comment-input input {
+  color: #333;
+}
+
+
+.in-container {
+  background: #fff;
+  flex: 1;
+}
+

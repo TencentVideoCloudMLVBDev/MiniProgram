@@ -122,7 +122,10 @@ const CONF = {
     heartBeatTimeout: 20,
 
     // 空闲房间超时 房间创建后一直没有人进入，超过给定时间将会被后台回收，单位秒
-    maxIdleDuration: 30
+    maxIdleDuration: 30,
+
+    // 是否允许房间管理员退出推流时，销毁房间
+    creatorCanDestroyRoom: false
   },
 
   /**
@@ -133,7 +136,10 @@ const CONF = {
     heartBeatTimeout: 20,
 
     // 空闲房间超时 房间创建后一直没有人进入，超过给定时间将会被后台回收，单位秒
-    maxIdleDuration: 30
+    maxIdleDuration: 30,
+
+    // 是否允许房间管理员退出推流时，销毁房间
+    creatorCanDestroyRoom: false
   },
 
   /**
@@ -156,10 +162,10 @@ const CONF = {
   /**
    * 辅助功能 后台日志文件获取相关 当前后台服务的访问域名。
    */
-  selfHost:"https://drourwkp.qcloud.la",
+  selfHost: 'https://drourwkp.qcloud.la',
 
   // 微信登录态有效期
   wxLoginExpires: 7200
 }
 
-module.exports = process.env.NODE_ENV === 'local' ? Object.assign({}, CONF, require('./config.local')) : CONF;
+module.exports = process.env.NODE_ENV === 'local' ? Object.assign({}, CONF, require('./config.local')) : CONF

@@ -4,6 +4,6 @@
 	<image class="pic {{horizontal ? '' : 'rotate'}}" style="z-index: 0; {{horizontal ? ('width: ' + width + 'px; height: ' + height + 'px;') : ('width: ' + width + 'px; height: ' + height + 'px;top: ' + width + 'px;')}}" src="{{backgroundPic[currentBoard].url}}"></image>
   <slot></slot>
 </canvas>
-  <!--<import src="img-loader.wxml"/>
-  <template is="img-loader" data="{{ imgLoadList }}"></template>-->
+  <import src="img-loader.wxml"/>
+  <template is="img-loader" data="{{ imgLoadList }}"></template>
 </view>

@@ -993,7 +993,7 @@ function exitRoom(options) {
 			},
 			success: function(ret) {
 				//非房间创建者回调
-				if (roomCreator != roomInfo.roomCreator) {
+				// if (roomCreator != roomInfo.roomCreator) {
 					if(ret.data.code) {
 						console.error('退出房间失败:',ret);
 						console.error('退房信息: roomID:' + roomInfo.roomID + ", userID:" + accountInfo.userID);
@@ -1005,11 +1005,11 @@ function exitRoom(options) {
 					}
 					console.log('退出推流成功');
 					options.success && options.success({});
-				}
+				// }
 			},
 			fail: function(ret) {
 				//非房间创建者回调
-				if (roomCreator != roomInfo.roomCreator) {
+				// if (roomCreator != roomInfo.roomCreator) {
 					console.log('退出房间失败:',ret);
 					var errCode = ret.errCode || -1;
 					var errMsg = ret.errMsg || '退出房间失败'
@@ -1021,47 +1021,47 @@ function exitRoom(options) {
 						errCode: errCode,
 						errMsg: errMsg
 					});
-				}
+				// }
 			}
 		});
 	}
 
-	if (roomInfo.roomCreator == accountInfo.userID && roomInfo.roomID) {
-		//房间创建者销毁房间
-		request({
-			url: 'destroy_room',
-			data: {
-				userID: accountInfo.userID,
-				roomID: roomInfo.roomID
-			},
-			success: function (ret) {
-				if(ret.data.code) {
-					console.error('销毁房间失败:',ret);
-					console.error('房间信息: roomID:' + roomInfo.roomID + ", userID:" + accountInfo.userID);
-					options.fail && options.fail({
-						errCode: ret.data.code,
-						errMsg: ret.data.message + '[' + ret.data.code + ']'
-					});
-					return;
-				}
-				console.log("销毁房间成功");
-				options.success && options.success({});
-			},
-			fail: function (ret) {
-				console.error("销毁房间失败:", ret);
-				var errCode = ret.errCode || -1;
-				var errMsg = ret.errMsg || '销毁房间失败'
-				if(ret.errMsg == 'request:fail timeout') {
-					errCode = -1;
-					errMsg = '网络请求超时，请检查网络状态';
-				}
-				options.fail && options.fail({
-					errCode: errCode,
-					errMsg: errMsg
-				});
-			}
-		})
-	}
+	// if (roomInfo.roomCreator == accountInfo.userID && roomInfo.roomID) {
+	// 	//房间创建者销毁房间
+	// 	request({
+	// 		url: 'destroy_room',
+	// 		data: {
+	// 			userID: accountInfo.userID,
+	// 			roomID: roomInfo.roomID
+	// 		},
+	// 		success: function (ret) {
+	// 			if(ret.data.code) {
+	// 				console.error('销毁房间失败:',ret);
+	// 				console.error('房间信息: roomID:' + roomInfo.roomID + ", userID:" + accountInfo.userID);
+	// 				options.fail && options.fail({
+	// 					errCode: ret.data.code,
+	// 					errMsg: ret.data.message + '[' + ret.data.code + ']'
+	// 				});
+	// 				return;
+	// 			}
+	// 			console.log("销毁房间成功");
+	// 			options.success && options.success({});
+	// 		},
+	// 		fail: function (ret) {
+	// 			console.error("销毁房间失败:", ret);
+	// 			var errCode = ret.errCode || -1;
+	// 			var errMsg = ret.errMsg || '销毁房间失败'
+	// 			if(ret.errMsg == 'request:fail timeout') {
+	// 				errCode = -1;
+	// 				errMsg = '网络请求超时，请检查网络状态';
+	// 			}
+	// 			options.fail && options.fail({
+	// 				errCode: errCode,
+	// 				errMsg: errMsg
+	// 			});
+	// 		}
+	// 	})
+	// }
 	webimhandler.quitBigGroup();	// 退出IM大群
 
 	roomInfo.roomID = '';

@@ -1,4 +1,24 @@
-#腾讯云音视频多人会话解决方案部署指引
+<style>
+table td { 
+    height: 35px; 
+    text-align:center;
+    vertical-align:middle; 
+}
+.markdown-text-box img {
+    border: 0;
+    max-width: 100%;
+    height: auto;
+    box-sizing: content-box;
+    box-shadow: 0 0 0px #ccc;
+    margin: 0px 0;
+}    
+.markdown-text-box table td, .markdown-text-box table th {
+    padding: 8px 13px;
+    border: 1px solid #d9d9d9;
+    word-wrap: break-word;
+    text-align: center;
+}    
+</style>
 
 ## 1.项目简介
 在构建直播业务，多人音视频业务等场景下，都需要后台配合完成诸如：
@@ -43,8 +63,6 @@
 ![](https://mc.qcloudimg.com/static/img/3e9cd34ca195036e21cb487014cc2c81/yuntongxing3.png)
 
 
-
-
 ## 安装微信小程序开发工具
 
 下载并安装最新版本的[微信开发者工具](https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html)，使用小程序绑定的微信号扫码登录开发者工具。
@@ -53,7 +71,7 @@
 
 ## 下载 Demo
 
-访问 [小程序] (https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo)，获取小程序 Demo 和后台源码。
+访问 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo)，获取小程序 Demo 和后台源码。
 
 ## 上传和部署代码
 
@@ -68,185 +86,62 @@
 ![上传代码](https://mc.qcloudimg.com/static/img/fd7074730e5b37af8a4d86dc8125d120/xiaochengxustart.png)
 
 4 . 打开 RTCRoomDemo 代码中 `server` 目录下的 `config.js` 文件，修改配置信息
+
 需要替换的参数一览：
-| 参数名| 作用 | 获取方案 |
-|---------|---------|---------|
-| live.appID | 腾讯云直播服务基于 appID 区分客户身份 | [DOC](https://cloud.tencent.com/document/product/454/7953#LVB_APPID) |
-| live.bizid | 腾讯云直播服务基于 bizid 区分客户业务 | [DOC](https://cloud.tencent.com/document/product/454/7953#LVB_BIZID) |
-| live.pushSecretKey | 腾讯云直播服务用于推流防盗链 | [DOC](https://cloud.tencent.com/document/product/454/7953#LVB_PUSH_SECRECT) |
-| live.APIKey | 腾讯云直播服务的后台 REST API，采用 APIKey 进行安全保护 | [DOC](https://cloud.tencent.com/document/product/454/7953#LVB_API_SECRECT) |
-| im.sdkAppID | 腾讯云通讯服务用 sdkAppID 区分 IM 客户身份 | [DOC](https://cloud.tencent.com/document/product/454/7953#IM_SDKAPPID) |
-| im.accountType | 曾用于区分 APP 类型，现仅出于兼容性原因而保留 | [DOC](https://cloud.tencent.com/document/product/454/7953#IM_ACCTYPE) |
-| im.administrator | RoomService 使用了 IM REST API 发送房间里的系统消息，而 IM REST API 接口需要您填写管理员名称。 |  [DOC](https://cloud.tencent.com/document/product/454/7953#IM_ADMIN)  |
-| im.privateKey | RoomService 使用 privateKey 用于签发管理员（administrator）的 usersig，进而能够调用 IM REST API 发送房间里的系统消息。  |  [DOC](https://cloud.tencent.com/document/product/454/7953#IM_PRIKEY)  |
-| im.publicKey | RoomService 使用 publicKey 用于确认终端用户的登录身份。 | [DOC](https://cloud.tencent.com/document/product/454/7953#IM_PRIKEY) |
 
+<table width="850px">
+  <tr align="center">
+	<th width="80px">参数名</th>
+    <th width="570px">作用</th>
+    <th width="120px">获取方案</th>
+  </tr>
+  <tr align="center">
+    <td>live.appID</td>
+    <td>腾讯云直播服务基于 appID 区分客户身份</td>
+    <td><a href="https://cloud.tencent.com/document/product/454/7953#LVB_APPID">DOC</a></td>
+  </tr>
 
-config.js 说明 注意live参数和im参数：
-```json
-const CONF = {
-  // 服务监听的端口，nginx反向代理配置时注意填写该端口
-  port: '5757',
-
-  // 不用关心
-  rootPathname: '',
-
-  // 微信小程序 App ID，若不支持微信小程序端, appId 字段可以不填
-  appId: '',
-
-  // 微信小程序 App Secret, 若不支持微信小程序端，appSecret 字段可以不填
-  appSecret: '',
-
-  // 是否使用腾讯云代理登录小程序,没有用到腾讯云代理,这里默认填false，若不知此后微信小城端，useQcloudLogin 字段可以不用关心。
-  useQcloudLogin: false,
-
-  /**
-   * 需要开通云直播服务
-   * 参考指引 @https://cloud.tencent.com/document/product/454/7953#LVB
-   * 有介绍appID，bizid，APIKey 和 pushSecretKey的获取方法。
-   */
-  live: {
-    /**
-     *  云直播 appID, 是一个10~11位数字
-     */
-    appID: XXXXXXXXXX,
-
-    /**
-     *  云直播 bizid，是一个4~5位的数字
-     */
-    bizid: XXXX,
-
-    /**
-     *  云直播 推流防盗链key，是一个32个16进制字符组成的字符串
-     */
-    pushSecretKey: 'abcdef012345789abcdef012345789',
-
-    /**
-     *  云直播 API鉴权key,是一个32个16进制字符组成的字符串
-     */
-    APIKey: 'abcdef012345789abcdef012345789',
-
-    // 云直播 推流地址有效期 单位秒 默认7天
-    validTime: 3600 * 24 * 7
-  },
-
-  /**
-   * 需要开通云通信服务
-   * 参考指引 @https://cloud.tencent.com/document/product/454/7953#IM
-   * 有介绍sdkAppID 和 accountType的获取方法。以及私钥文件的下载方法。
-   */
-  im: {
-    /**
-     *  云通信 sdkAppID,  是一个10~11位数字
-     */
-    sdkAppID: xxxxxxxxxxx,
-
-    /**
-     *  云通信 账号集成类型 accountType, 是一个5个数字字符组成的字符串
-     */
-    accountType: 'xxxxx',
-
-    /*
-    * 云通信 管理员账号，是一个字符串
-    */ 
-    administrator: 'administrator',
-
-    /**
-     *  云通信 私钥用于生成userSig，私钥文件内容，注意换行符转义 '\r\n'
-     */
-    privateKey: '-----BEGIN PRIVATE KEY-----\r\n' + 'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgr+XXXXXXXXXX\r\n' + 'Y5ukC7sUj5ep7r9TVxTrXXXXXXXXRANCAASuxr7AJGiXRqGpiO7pPr7jH1PXG/FY\r\n' + 'zbTbMHaWCqVm+XXXXXX+ZcHP93ss3OhgZKh8pq+g7X26dW5fQkOTFTmg\r\n' + '-----END PRIVATE KEY-----\r\n',
-
-    /**
-     * 云通信 公钥用于验证userSig，公钥文件内容，注意换行符转义 '\r\n'
-     */
-    publicKey: '-----BEGIN PUBLIC KEY-----\r\n' + 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAErsa+wCRol0ahqYju6T6+XXXXXXXX\r\n' + 'WM202zB2lgqlZvkBU59B/mXBz/d7LNzoYGSofKavoO19unVuXXXXXXXXXXXX\r\n' + '-----END PUBLIC KEY-----\r\n'
-  },
-
-  /**
-   * MySQL 配置，用来存储 session 和用户信息
-   * 若使用了腾讯云微信小程序解决方案
-   * 开发环境下，MySQL 的初始密码为您的微信小程序 appid, 若不支持微信小程序端，mysql 配置参数不用关心
-   */
-  mysql: {
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    db: 'cAuth',
-    pass: '',
-    char: 'utf8mb4'
-  },
-
-  /**
-  * 若不支持微信小程序端， cos 配置参数不用关心
-  */
-  cos: {
-    /**
-     * 区域
-     * 华北：cn-north
-     * 华东：cn-east
-     * 华南：cn-south
-     * 西南：cn-southwest
-     * 新加坡：sg
-     * @see https://www.qcloud.com/document/product/436/6224
-     */
-    region: 'cn-south',
-    // Bucket 名称
-    fileBucket: 'wximg',
-    // 文件夹
-    uploadFolder: ''
-  },
-
-  /**
-   * 多人音视频房间相关参数
-   */
-  multi_room: {
-    // 房间容量上限
-    maxMembers: 4,
-
-    // 心跳超时 单位秒
-    heartBeatTimeout: 20,
-
-    // 空闲房间超时 房间创建后一直没有人进入，超过给定时间将会被后台回收，单位秒
-    maxIdleDuration: 30
-  },
-
-  /**
-   * 双人音视频房间相关参数
-   */
-  double_room: {
-    // 心跳超时 单位秒
-    heartBeatTimeout: 20,
-
-    // 空闲房间超时 房间创建后一直没有人进入，超过给定时间将会被后台回收，单位秒
-    maxIdleDuration: 30
-  },
-
-  /**
-   * 直播连麦房间相关参数
-   */
-  live_room: {
-    // 房间容量上限
-    maxMembers: 4,
-
-    // 心跳超时 单位秒
-    heartBeatTimeout: 20,
-
-    // 空闲房间超时 房间创建后一直没有人进入，超过给定时间将会被后台回收，单位秒
-    maxIdleDuration: 30,
-
-    // 最大观众列表长度
-    maxAudiencesLen: 30
-  },
-
-  /**
-   * 辅助功能 后台日志文件获取相关 当前后台服务的访问域名。可以不用关心
-   */
-  selfHost: 'XXXXXXXXXXX',
-
-  // 微信登录态有效期
-  wxLoginExpires: 7200
-}
-```
+<tr align="center">
+    <td>live.bizid</td>
+    <td>腾讯云直播服务基于 bizid 区分客户业务</td>
+    <td><a href="https://cloud.tencent.com/document/product/454/7953#LVB_BIZID">DOC</a></td>
+</tr>
+<tr align="center">
+    <td>live.pushSecretKey</td>
+    <td>腾讯云直播服务用于推流防盗链</td>
+    <td><a href="https://cloud.tencent.com/document/product/454/7953#LVB_PUSH_SECRECT">DOC</a></td>
+  </tr>
+<tr align="center">
+    <td>live.APIKey</td>
+    <td>腾讯云直播服务的后台 REST API，采用 APIKey 进行安全保护</td>
+    <td><a href="https://cloud.tencent.com/document/product/454/7953#LVB_API_SECRECT">DOC</a></td>
+  </tr>
+<tr align="center">
+    <td>im.sdkAppID</td>
+    <td>腾讯云通讯服务用 sdkAppID 区分 IM 客户身份</td>
+    <td><a href="(https://cloud.tencent.com/document/product/454/7953#IM_SDKAPPID">DOC</a></td>
+  </tr>
+<tr align="center">
+    <td>im.accountType</td>
+    <td>曾用于区分 APP 类型，现仅出于兼容性原因而保留</td>
+    <td><a href="https://cloud.tencent.com/document/product/454/7953#IM_ACCTYPE">DOC</a></td>
+  </tr>
+<tr align="center">
+    <td>im.administrator</td>
+    <td>RTCRoomServer 使用了 IM REST API 发送房间里的系统消息，而 IM REST API 接口需要您填写管理员名称。</td>
+    <td><a href="https://cloud.tencent.com/document/product/454/7953#IM_ADMIN">DOC</a></td>
+  </tr>
+<tr align="center">
+    <td>im.privateKey</td>
+    <td>RTCRoomServer 使用 privateKey 用于签发管理员（administrator）的 usersig，进而能够调用 IM REST API 发送房间里的系统消息。</td>
+    <td><a href="https://cloud.tencent.com/document/product/454/7953#IM_PRIKEY">DOC</a></td>
+  </tr>
+<tr align="center">
+    <td>im.publicKey</td>
+    <td>RTCRoomServer RoomService 使用 publicKey 用于确认终端用户的登录身份。</td>
+    <td><a href="https://cloud.tencent.com/document/product/454/7953#IM_PRIKEY">DOC</a></td>
+  </tr>
+</table>
 
 5 . 点击界面右上角的【腾讯云】图标，在下拉的菜单栏中选择【上传测试代码】。
 
@@ -258,7 +153,7 @@ const CONF = {
 
 ![上传成功](https://mc.qcloudimg.com/static/img/a78431b42d0edf0bddae0b85ef00d40f/7.png)
 
-7 . 上传代码完成之后，点击右上角的【详情】按钮，接着选择【腾讯云状态】即可看到腾讯云自动分配给你的开发环境域名，完整复制（包括 `https://`）开发环境 request 域名，然后在编辑器中打开 `wxlite/config.js` 文件，将复制的域名填入 `url` 中并保存，保存之后编辑器会自动编译小程序，左边的模拟器窗口即可实时显示出客户端的 Demo：
+7 . 上传代码完成之后，点击右上角的【详情】按钮，接着选择【腾讯云状态】即可看到腾讯云自动分配给你的开发环境域名，完整复制（包括 `https://`）开发环境 request 域名，然后在编辑器中打开 `wxlite/config.js` 文件，将复制的域名填入 `serverUrl` 和`roomServiceUrl`中并保存，保存之后编辑器会自动编译小程序，左边的模拟器窗口即可实时显示出客户端的 Demo：
 
 ![查看开发域名](https://main.qcloudimg.com/raw/c5ed016e213cac0be7cb623dd0c96895.png)
 
@@ -273,40 +168,40 @@ const CONF = {
 <font color='red'> 注意：后台服务器部署的测试环境有效期为七天，如果还需要测试体验请重新部署后台。小程序访问域名有白名单限制，小程序开启调试就不会检查白名单，测试期间建议开启白名单，最后要发布的时候将域名配置到白名单里面，请参考常见问题里面如何部署正式环境？</font>
 
 ## 六、项目结构  
+
 ```
 RTCRoomDemo
-RTCRoomDemo
 ├── README.md
-├── server               //后台代码目录，具体请参见服务端项目结构介绍
-├── wxlite               //腾讯视频云小程序目录
-├── ├── pages            //腾讯视频云小程序界面主目录
-├── ├── ├── main         //腾讯视频云小程序主界面
-├── ├── ├── liveroom     //腾讯视频云小程序直播体验室
-├── ├── ├── ├────roomlist//腾讯视频云小程序直播体验室列表界面
-├── ├── ├── ├────room    //腾讯视频云小程序直播体验室直播界面
-├── ├── ├── livelinkroom //腾讯视频云小程序直播连麦
-├── ├── ├── ├────room    //腾讯视频云小程序直播连麦界面
-├── ├── ├── doubleroom   //腾讯视频云小程序双人音视频
-├── ├── ├── ├────roomlist//腾讯视频云小程序双人音视频在线列表
-├── ├── ├── ├────room    //腾讯视频云小程序双人音视频视频聊天界面
-├── ├── ├── multiroom    //腾讯视频云小程序多人音视频
-├── ├── ├── ├────roomlist//腾讯视频云小程序多人音视频在线列表
-├── ├── ├── ├────room    //腾讯视频云小程序多人音视频视频聊天界面
-├── ├── ├── play         //腾讯视频云小程序播放界面
-├── ├── ├── push         //腾讯视频云小程序推流界面
-├── ├── ├── rtpplay      //腾讯视频云小程序低延时播放界面
-├── ├── ├── vodplay      //腾讯视频云小程序点播播放界面
-├── ├── ├── components    //腾讯视频云小程序自定义组件
-├── ├── ├── ├─── live-room    //腾讯视频云小程序<live-room>组件
-├── ├── ├── ├─── ├───vertical1v3template    //腾讯视频云小程序<live-room>组件使用的界面模版
-├── ├── ├── ├────rtc-room    //腾讯视频云小程序<rtc-room>组件
-├── ├── ├── ├─── ├───gridtemplate    //腾讯视频云小程序<rtc-room>组件使用的界面模版
-├── ├── ├── Resources    //腾讯视频云小程序资源目录
-├── ├── lib              //小程序使用的通用库目录
-├── ├── utils            //腾讯视频云小程序界工具库目录
-├── ├── ├── rtcroom.js   //腾讯视频云小程序双人、多人音视频库文件
-├── ├── ├── liveroom.js  //腾讯视频云小程序单向音视频库文件
-└── └── config.js        //配置文件，主要配置后台服务器地址
+├── server                       //后台代码目录，具体请参见服务端项目结构介绍
+└── wxlite                       //腾讯视频云小程序目录
+   ├── config.js                 //配置文件，主要配置后台服务器地址
+   ├── lib                       //小程序使用的通用库目录
+   ├── pages                     //腾讯视频云小程序界面主目录
+   │      ├── Resources          //资源目录
+   │      ├── components         //组件目录
+   │      │      ├── live-room   //腾讯视频云小程序<live-room>组件
+   │      │      │      └── vertical1v3template     //腾讯视频云小程序<live-room>组件使用的界面模版
+   │      │      ├── rtc-room    //腾讯视频云小程序<rtc-room>组件
+   │      │      │      └── gridtemplate            //腾讯视频云小程序<rtc-room>组件使用的界面模版
+   │      │      ├── sketchpad
+   │      │      └── webrtc-room //腾讯视频云小程序<webrtc-room>组件
+   │      │          ├── 1l3rtemplate               //腾讯视频云小程序<webrtc-room>组件使用的界面模版
+   │      │          ├── 1u3dtemplate               //腾讯视频云小程序<webrtc-room>组件使用的界面模版
+   │      │          └── gridtemplate               //腾讯视频云小程序<webrtc-room>组件使用的界面模版
+   │      ├── doubleroom         //腾讯视频云小程序双人音视频
+   │      ├── livelinkroom       //腾讯视频云小程序直播连麦  
+   │      ├── liveroom           //腾讯视频云小程序直播体验室
+   │      ├── main               //腾讯视频云小程序主界面
+   │      ├── multiroom          //腾讯视频云小程序多人音视频
+   │      ├── play               //腾讯视频云小程序播放界面
+   │      ├── push               //腾讯视频云小程序推流界面
+   │      ├── rtplay             //腾讯视频云小程序低延时播放界面
+   │      ├── vodplay            //腾讯视频云小程序点播播放界面
+   │      └── webrtcroom         //腾讯视频云小程序webrtc互通体验室
+   └── utils
+       ├── liveroom.js           //腾讯视频云小程序单向音视频库文件
+       ├── rtcroom.js            //腾讯视频云小程序双人、多人音视频库文件
+       └── webrtcroom.js         //腾讯视频云小程序webrtc互通库文件
 ```
 
 ## 常见问题 FAQ

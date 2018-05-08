@@ -1,5 +1,5 @@
 <template name='gridtemplate'>
-    <view class='videoview'>
+    <view class='grid videoview'>
         <view class="pusher-box">
             <live-pusher wx:if="{{pushURL}}"
                 id="rtcpusher"

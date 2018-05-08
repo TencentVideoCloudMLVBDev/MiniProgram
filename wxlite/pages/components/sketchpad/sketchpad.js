@@ -2,7 +2,7 @@
 // 由于 currentBoard backgroundPic 需要在页面上使用 因此需要用setData
 // 其余data中的数据 均未与页面同步
 let tools = require('tools.js');
-// const ImgLoader = require('img-loader.js');
+const ImgLoader = require('img-loader.js');
 const FileCache = require('FileCache.js');
 Component({
 	properties: {
@@ -21,7 +21,7 @@ Component({
 		}, // 用户名
 		canDraw: {
 			type: Boolean,
-			value: true
+			value: false
 		}, // 能否画画
 		height: {
 			type: Number,
@@ -69,9 +69,15 @@ Component({
 	},
 	ready: function() {
 		this.init();
-		// this.imgLoader = new ImgLoader(this);
-		this.fileCache = new FileCache();
+		this.imgLoader = new ImgLoader(this);
+		// this.fileCache = new FileCache();
 	},
+
+	detached() {
+		clearInterval(this.data.sendInterval);
+		clearInterval(this.data.drawInterval);
+	},
+
 	methods: {
 		addData: function(data) {
 			if (!data.value) {
@@ -173,21 +179,21 @@ Component({
 			if (this.data.currentBoard == boardId) {
 				// wx.showLoading({title: '图片加载中'}); // 因为提示在整体UI的中心，randewang 建议屏蔽不要提示
 			}
-			this.fileCache.load(url, function (res) {
-				if (res.code) {
-					console.error('图片加载失败:', res.errMsg);
-					return;
-				}
-				console.log('图片加载完成', res.tmpFilePath);
-				temp[boardId].url = res.tmpFilePath;
-				self.setData({backgroundPic: temp});
-			})
-			// this.imgLoader.load(url, (err, data) => {
-			// 	console.log('图片加载完成', err, data.src)
-			// 	if (!err)
-			// 		self.setData({backgroundPic: temp});
+			// this.fileCache.load(url, function (res) {
+			// 	if (res.code) {
+			// 		console.error('图片加载失败:', res.errMsg);
+			// 		return;
 			// 	}
-			// );
+			// 	console.log('图片加载完成', res.tmpFilePath);
+			// 	temp[boardId].url = res.tmpFilePath;
+			// 	self.setData({backgroundPic: temp});
+			// })
+			this.imgLoader.load(url, (err, data) => {
+				console.log('图片加载完成', err, data.src)
+				if (!err)
+					self.setData({backgroundPic: temp});
+				}
+			);
 			wx.hideLoading();
 			this.data.needDraw = true;
 		},
@@ -508,6 +514,7 @@ Component({
 			this.data.ctx = wx.createCanvasContext('sketchpad', this);
 			// 计时器
 			this.data.drawInterval = setInterval(() => {
+				console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 				if (this.data.needDraw) {
 					this.draw();
 					this.data.needDraw = false;

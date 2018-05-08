@@ -71,7 +71,8 @@ Component({
         },
         members: [],
         visualPlayers: [],
-        requestLinking: false
+        requestLinking: false,
+        mode: 'SD'
     },
 
     methods: {
@@ -217,8 +218,10 @@ Component({
                     success: function (ret) {
                         console.log('getPushURL 成功，', ret);
                         self.data.mainPusherInfo.url = ret.pushURL;
+                        console.log('设置推流模式为:SD');
                         self.setData({
-                            mainPusherInfo: self.data.mainPusherInfo
+                            mainPusherInfo: self.data.mainPusherInfo,
+                            mode: 'SD'
                         }, function () {
                             self.setupLiveRoomListener();
                             self.data.pusherContext = wx.createLivePusherContext('pusher');
@@ -318,8 +321,10 @@ Component({
                 }
             }
            
+            console.log('设置推流模式为:RTC');
             self.setData({
-                members: temp
+                members: temp,
+                mode: 'RTC'
             }, function () {
                 temp.forEach(p => {
                     if (p.context) return;
@@ -339,14 +344,24 @@ Component({
                 for (var i in members) {
                     if (p.userID == members[i].userID) {
                         members[i].context && members[i].context.stop();
-                        members.splice(i, 1)
-                        members.push({})
+                        members.splice(i, 1);
+                        members.push({});
                         break;
                     }
                 }
             }
+
+            var mode = 'SD';
+            for (var i=0; i<members.length; ++i) {
+                if (members[i].userID) {
+                    mode = 'RTC';
+                }
+            }
+            console.log('设置推流模式为:', mode);
+
             self.setData({
-                members: members
+                members: members,
+                mode: mode
             }, () => {
                 console.log('members after onPusherQuit: ', self.data.members)
             })
@@ -503,8 +518,8 @@ Component({
                 mute: false,
                 url: self.data.audience.mixUrl,
                 mode: 'live',
-                maxCache: 5,
-                minCache: 2,
+                maxCache: 3,
+                minCache: 1,
                 loading: false,
                 objectFit: 'contain',
                 userName: self.data.audience.pusherName
@@ -578,9 +593,12 @@ Component({
             return new Promise(function (resolve, reject) {
                 self.data.linkPusherInfo.url = url;
                 self.data.members.splice(0, 1);
+
+                console.log('设置推流模式为:RTC');
                 self.setData({
                     members: self.data.members,
-                    linkPusherInfo: self.data.linkPusherInfo
+                    linkPusherInfo: self.data.linkPusherInfo,
+                    mode: 'RTC'
                 }, function () {
                     self.data.pusherContext = wx.createLivePusherContext('audience_pusher');
                     console.log('startLinkPush.创建 pusherContext：', self.data.pusherContext);

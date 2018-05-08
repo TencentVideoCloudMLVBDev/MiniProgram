@@ -17,6 +17,7 @@ Page({
         inputMsg: [],
         muted: false,
         toview: '',
+        beauty: 5
     },
 
     onLoad: function (options) {

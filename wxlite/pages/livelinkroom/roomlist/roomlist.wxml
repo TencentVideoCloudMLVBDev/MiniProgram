@@ -13,8 +13,6 @@
     </view>
   </view> 
 </view>
-<!--
 <view class='bottom-btn'> 
   <button type="primary" bindtap="create" hover-class="none">新建直播间</button>
 </view> 
--->

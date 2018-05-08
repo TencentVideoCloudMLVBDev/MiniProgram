@@ -1,6 +1,6 @@
 <block wx:if="{{template == 'vertical1v3'}}">
     <import src='/pages/components/live-room/vertical1v3template/vertical1v3.wxml' />
-    <template is="{{template}}" data="{{debug, menuItems, isCaster, mainPusherInfo, beauty, muted, pureaudio, userName, visualPlayers, linkPusherInfo, members}}" />
+    <template is="{{template}}" data="{{debug, menuItems, isCaster, mainPusherInfo, beauty, muted, pureaudio, userName, visualPlayers, linkPusherInfo, members, mode}}" />
 </block>
 
 <block wx:else>

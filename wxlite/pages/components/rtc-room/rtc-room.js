@@ -106,7 +106,7 @@ Component({
                     },
                     success: function(res) {
                         if (res.pushers.length > self.data.maxMembers) {
-                            self.postErrorEvent(ERROR_REACH_MAX_MEMBERS, '房间已达到最大人数限制');
+                            self.postErrorEvent(self.data.ERROR_REACH_MAX_MEMBERS, '房间已达到最大人数限制');
                             return;
                         }
                         //拉流开始时间戳
@@ -225,6 +225,14 @@ Component({
                     roomID: self.data.roomID,
                     pushURL: self.data.pushURL,
                     roomInfo: self.data.roomInfo
+                },
+                success: function(res) {
+                    console.log('进房成功');
+                },
+                fail: function(res) {
+                    console.error('进房失败:', res);
+                    self.exitRoom();
+                    self.postErrorEvent(self.data.ERROR_ENTER_ROOM, '进入房间失败[' + res.errMsg + '(' + res.errCode + ')]');
                 }
             });
         },
