@@ -71,13 +71,18 @@
 
 ## 后台自行部署
 
-### WebRTCRoom （Java版） 
+小程序里用到了两个后台，您可以根据需要选择其中的一个或者两个后台来部署。
+
+1. WebRTCRoomServer : 提供**webrtc互通**的房间列表管理和**webrtc-room**标签几个所需参数。
+2. RTCRoomServer : 提供**直播体验室** 和 **双人/多人音视频** 的房间列表管理、**live-room**（直播连麦）和 **rtc-room**（视频通话）标签的后台组件。
+
+### WebRTCRoomServer 
 
 实现了一个简单的房间列表功能，同时包含**webrtc-room**标签几个所需参数的生成代码
 
-1.Java后台自行部署
+1.后台自行部署
 
-下载 [WebRTC后台源码](https://github.com/TencentVideoCloudMLVBDev/webrtc_server_java)，根据README.md中的指引部署后台服务。
+下载 [WebRTCRoomServer java后台源码](https://github.com/TencentVideoCloudMLVBDev/webrtc_server_java)，根据README.md中的指引部署后台服务。
 
 2.小程序部署
 
@@ -86,13 +91,17 @@
 https://您自己的域名/webrtc/weapp/webrtc_room
 ```
 
-### RTCRoom（Java版） 
+### RTCRoomServer 
 
-RTCRoom 是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的后台组件，源码下载后可部署于自己的业务服务器上。
+是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的后台组件，源码下载后可部署于自己的业务服务器上。
 
-1.Java后台自行部署
+1.后台自行部署
 
-下载 [RTCRoom后台源码](https://github.com/TencentVideoCloudMLVBDev/rtcroom_server_java)，根据README.md中的指引部署后台服务。
+RTCRoomServer同时提供了java版本和nodejs版本，您可以选择一种语言版本来部署。
+
+- 下载 [RTCRoomServer java后台源码](https://github.com/TencentVideoCloudMLVBDev/rtcroom_server_java)，根据README.md中的指引部署后台服务。
+
+- 下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/MiniProgram) 源码，根据[一键部署指引](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2_NodeJS.md)完成部署。
 
 2.小程序部署
 
@@ -100,15 +109,6 @@ RTCRoom 是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的
 ```
 https://您自己的域名/roomservice/
 ```
-
-
-### RTCRoom（NodeJS一键部署） 
-
-RTCRoom是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的后台组件，源码下载后可部署于自己的业务服务器上。
-
-1.NodeJS一键部署(包含了小程序&后台)
-
-- 下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/MiniProgram) 源码，根据[一键部署指引](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2_NodeJS.md)完成部署。
 
 ## 开发者资源
 * 小程序

@@ -1,61 +1,45 @@
 ## 项目结构
 ```
 server
-├── README.md
-├── app.js
+├── README.md                            //后台部署说明
 ├── account
-│   ├── index.js
-│   ├── login.js
-│   └── logout.js
+│   ├── login.js                         //登录最后处理
+│   └── logout.js                        //登出最后处理
+├── app.js                               //服务器端 的主入口文件
+├── config.js                            //配置文件，需要修改
 ├── controller
-│   ├── add_audience.js
-│   ├── add_pusher.js
-│   ├── create_room.js
-│   ├── delete_audience.js
-│   ├── delete_pusher.js
-│   ├── destroy_room.js
-│   ├── get_audiences.js
-│   ├── get_custom_info.js
-│   ├── get_push_url.js
-│   ├── get_pushers.js
-│   ├── get_room_list.js
-│   ├── index.js
-│   ├── merge_stream.js
-│   ├── pusher_heartbeat.js
-│   └── set_custom_field.js
+│   ├── add_audience.js                  //增加观众接口
+│   ├── add_pusher.js                    //增加pusher接口
+│   ├── create_room.js                   //建房接口
+│   ├── delete_audience.js               //删除观众接口
+│   ├── delete_pusher.js                 //删除pusher接口
+│   ├── destroy_room.js                  //销毁房间接口
+│   ├── get_audiences.js                 //获取观众列表接口
+│   ├── get_custom_info.js               //获取直播房间自定义信息接口
+│   ├── get_push_url.js                  //获取推流地址接口
+│   ├── get_pushers.js                   //获取推流者列表接口
+│   ├── get_room_list.js                 //获取房间列表接口
+│   ├── merge_stream.js                  //混流接口
+│   ├── pusher_heartbeat.js              //推流者心跳接口
+│   └── set_custom_field.js              //设置直播房间自定义信息接口
+├── log.js                               //log实现
+├── log_config.js                        //log配置信息
 ├── logic
-│   ├── auth.js
-│   ├── do_request.js
-│   ├── im_mgr.js
-│   ├── live_util.js
-│   ├── room_list.js
-│   └── room_mgr.js
-├── logs
-│   ├── error
-│   │   └── do_not_delete_this.log
-│   └── response
-│       └── do_not_delete_this.log
+│   ├── auth.js                          //权限验证
+│   ├── do_request.js                    //请求处理
+│   ├── im_mgr.js                        //云通信相关逻辑
+│   ├── live_util.js                     //通用逻辑
+│   ├── room_list.js                     //房间列表
+│   └── room_mgr.js                      //房间管理
 ├── middlewares
-│   ├── bodyparser.js
-│   └── response.js
-├── node_modules
+│   ├── bodyparser.js                    //包体解析
+│   └── response.js                      //回包
 ├── routes
-│   └── index.js
-├── utils
-│   ├── get_login_info.js
-│   ├── get_test_pushurl.js
-│   ├── get_test_rtmpaccurl.js
-│   ├── getlogfile.js
-│   ├── index.js
-│   ├── logfilelist.js
-│   └── test_config.js
-├── app.js
-├── config.js
-├── log.js
-├── log_config.js
-├── nodemon.json
-├── package.json
-└── process.prod.json
+│   └── index.js                         //路由文件
+└── utils
+    ├── get_login_info.js                //获取登录信息
+    ├── get_test_pushurl.js              //获取一对推流播放地址
+    └── get_test_rtmpaccurl.js           //获取测试低延时播放地址
 ```
 
 `app.js` 是 服务器端 的主入口文件，使用 Koa 框架，在 `app.js` 创建一个 Koa 实例并响应请求。
