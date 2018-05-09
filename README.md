@@ -46,11 +46,11 @@
 
 下载并安装最新版本的[微信开发者工具](https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html)，使用小程序绑定的微信号扫码登录开发者工具。
 
-![微信开发者工具](https://mc.qcloudimg.com/static/img/4fd45bb5c74eed92b031fbebf8600bd2/1.png)
+![根目录](https://mc.qcloudimg.com/static/img/4fd45bb5c74eed92b031fbebf8600bd2/1.png)
 
 ## 下载 Demo
 
-访问 [GitBub地址](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo)，获取小程序 Demo源码。
+访问 [GitBub地址](https://github.com/TencentVideoCloudMLVBDev/MiniProgram)，获取小程序 Demo源码。
 
 ## 本地调试小程序代码
 
@@ -58,19 +58,20 @@
 2.输入小程序 AppID，项目目录选择上一步下载下来的代码目录，点击确定创建小程序项目。
 3.再次点击【确定】进入开发者工具。
 
-> **注意：** 目录请选择 `RTMPRoom` 根目录。包含有 `project.config.json`，请不要只选择 `wxlite` 目录！
+> **注意：** 目录请选择根目录！
+> ![微信开发者工具](https://main.qcloudimg.com/raw/6932cf9611cbe3acb4e0ad212785e610.png)
 
 ![上传代码](https://mc.qcloudimg.com/static/img/fd7074730e5b37af8a4d86dc8125d120/xiaochengxustart.png)
 
-4.请使用手机进行测试，直接扫描开发者工具预览生成的二维码进入，<font color='red'> 这里使用的是腾讯云提供的官方Demo测试后台，小程序控制台没有配置域名白名单，一定要开启调试: </font>
+4.请使用手机进行测试，直接扫描开发者工具预览生成的二维码进入，<font color='red'> 如果只是想运行起来看看效果，可以直接使用我们提供的后台。小程序控制台没有配置域名白名单，一定要开启调试: </font>
 
 ![开启调试](https://mc.qcloudimg.com/static/img/1abfe50750f669ca4e625ec3cdfbd411/xiaochengxutiaoshi.png)
 
-至此，您已经可以在本地修改调试小程序代码了，如果您需要上线，则需要部署自己的后台环境，请参考后台自行部署。
+至此，您已经可以在本地修改调试小程序代码了。<font color='red'> 如果您需要上线，则需要部署自己的后台环境，请参考后台自行部署。</font>
 
 ## 后台自行部署
 
-### WebRTC解决方案 （Java版） 
+### WebRTCRoom （Java版） 
 
 实现了一个简单的房间列表功能，同时包含**webrtc-room**标签几个所需参数的生成代码
 
@@ -80,19 +81,12 @@
 
 2.小程序部署
 
-下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo) 源码，将wxlite/config.js文件中的`webrtcServerUrl`修改成：
+下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/MiniProgram) 源码，将wxlite/config.js文件中的`webrtcServerUrl`修改成：
 ```
 https://您自己的域名/webrtc/weapp/webrtc_room
 ```
 
-3.web端部署
-
-下载 [web端](https://github.com/TencentVideoCloudMLVBDev/webrtc_pc) 源码，将component/WebRTCRoom.js文件中的`serverDomain`修改成：
-```
-https://您自己的域名/webrtc/weapp/webrtc_room
-```
-
-### RTCRoom解决方案（Java版） 
+### RTCRoom（Java版） 
 
 RTCRoom 是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的后台组件，源码下载后可部署于自己的业务服务器上。
 
@@ -102,36 +96,23 @@ RTCRoom 是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的
 
 2.小程序部署
 
-下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo) 源码，将wxlite/config.js文件中的`serverUrl`和 `roomServiceUrl`修改成:
+下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/MiniProgram) 源码，将wxlite/config.js文件中的`serverUrl`和 `roomServiceUrl`修改成:
 ```
 https://您自己的域名/roomservice/
 ```
 
-3.windows Demo部署
 
-下载 [windows web demo](https://github.com/TencentVideoCloudMLVBDev/webexe_web) 源码，将liveroom.html、double.html文件中的`RoomServerDomain`修改成:
-```
-https://您自己的域名/roomservice/
-```
-
-### RTCRoom解决方案（NodeJS一键部署） 
+### RTCRoom（NodeJS一键部署） 
 
 RTCRoom是 **live-room**（直播连麦）和 **rtc-room**（视频通话）的后台组件，源码下载后可部署于自己的业务服务器上。
 
 1.NodeJS一键部署(包含了小程序&后台)
 
-- 下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo) 源码，根据[一键部署指引](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2_NodeJS.md)完成部署。
-
-2.windows Demo部署
-
-下载 [windows web demo](https://github.com/TencentVideoCloudMLVBDev/webexe_web) 源码，将liveroom.html、double.html文件中的`RoomServerDomain`修改成:
-```
-https://您自己的域名/roomservice/
-```
+- 下载 [小程序](https://github.com/TencentVideoCloudMLVBDev/MiniProgram) 源码，根据[一键部署指引](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2_NodeJS.md)完成部署。
 
 ## 开发者资源
 * 小程序
-	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84.md) - 小程序项目结构
+	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/MiniProgram/blob/master/doc/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84.md) - 小程序项目结构
 	- [rtc-room标签](https://cloud.tencent.com/document/product/454/15364) - 用于双人、多人会话场景
 	- [live-room标签](https://cloud.tencent.com/document/product/454/15368) - 用于单向音视频及连麦场景
 	- [webrtc-room标签](https://cloud.tencent.com/document/product/454/16914) - 用于单向音视频场景
@@ -149,5 +130,5 @@ https://您自己的域名/roomservice/
 	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/rtcroom_server_java/blob/master/doc/codeStructure.md) - 服务端项目结构及简介
 	- [协议文档](https://github.com/TencentVideoCloudMLVBDev/rtcroom_server_java/blob/master/doc/protocol.md) - 后台协议文档
 * RTCRoom服务端(NodeJS)
-	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/server%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84_NodeJS.md) - 服务端项目结构及简介
-	- [协议文档](https://github.com/TencentVideoCloudMLVBDev/RTCRoomDemo/blob/master/doc/server%E5%8D%8F%E8%AE%AE%E6%96%87%E6%A1%A3_NodeJS.md) - 后台协议文档
+	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/MiniProgram/blob/master/doc/server%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84_NodeJS.md) - 服务端项目结构及简介
+	- [协议文档](https://github.com/TencentVideoCloudMLVBDev/MiniProgram/blob/master/doc/server%E5%8D%8F%E8%AE%AE%E6%96%87%E6%A1%A3_NodeJS.md) - 后台协议文档
