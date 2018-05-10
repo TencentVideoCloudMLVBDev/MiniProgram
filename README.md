@@ -90,7 +90,7 @@
 
 - step6: <font color='red'>开启调试模式</font>，体验和调试内部功能。开启调试可以跳过把这些域名加入小程序白名单的工作。
 
-<img style="border:0; max-width:100%; height:auto; box-sizing:content-box; box-shadow: 0px 0px 0px #ccc; margin: 0px 0px 0px 0px;" src="https://main.qcloudimg.com/raw/c05e7942a54a2ad41ec2066459edb528.png" />
+<img style="border:0; max-width:100%; height:auto; box-sizing:content-box; box-shadow: 0px 0px 0px #ccc; margin: 0px 0px 0px 0px;" src="https://main.qcloudimg.com/raw/64e03bea5dc2d54abfe40f17780b2f5c.png" />
 
 ## Demo访问的测试地址
 Demo小程序会访问如下表格中的测试服务器地址，这些服务器使用的云服务是我们为大家提供的一个体验账号，平时很多客户都会在上面做测试。如果您希望使用自己的后台服务器，以免被其他客户打扰，请关注文档后一节内容：
