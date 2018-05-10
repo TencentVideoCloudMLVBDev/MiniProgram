@@ -8,15 +8,13 @@ Page({
     canShow: 0,
     tapTime: '',		// 防止两次点击操作间隔太快
     entryInfos: [
-      { icon: "../Resources/liveroom.png", title: "直播体验室", navigateTo: "../liveroom/roomlist/roomlist" },
-      { icon: "../Resources/doubleroom.png", title: "视频通话", navigateTo: "../doubleroom/roomlist/roomlist" },
-      { icon: "../Resources/multiroom.png", title: "多人会议", navigateTo: "../multiroom/roomlist/roomlist" },
-      { icon: "../Resources/push.png", title: "RTMP推流", navigateTo: "../push/push" },
-      { icon: "../Resources/play.png", title: "直播播放", navigateTo: "../play/play" },
-      { icon: "../Resources/rtplay.png", title: "RTC播放", navigateTo: "../rtplay/rtplay" },
-      { icon: "../Resources/multiroom.png", title: "WebRTC", navigateTo: "../webrtcroom/roomlist/roomlist"},
-      { icon: "../Resources/liveroom.png", title: "互动课堂", navigateTo: "../livelinkroom/roomlist/roomlist" },
-      { icon: "../Resources/vodplay.png", title: "点播播放器", navigateTo: "../vodplay/vodplay" }
+      { icon: "../Resources/liveroom.png", title: "手机直播", desc: "<live-room>", navigateTo: "../live-phone/roomlist/roomlist" },
+      { icon: "../Resources/liveroom.png", title: "PC直播", desc: "<live-room>", navigateTo: "../live-pc/roomlist/roomlist" },
+      { icon: "../Resources/doubleroom.png", title: "双人通话", desc: "<rtc-room>", navigateTo: "../doubleroom/roomlist/roomlist" },
+      { icon: "../Resources/multiroom.png", title: "多人通话", desc: "<rtc-room>", navigateTo: "../multiroom/roomlist/roomlist" },
+      { icon: "../Resources/push.png", title: "RTMP推流", desc: "<live-pusher>", navigateTo: "../push/push" },
+      { icon: "../Resources/play.png", title: "直播播放", desc: "<live-player>", navigateTo: "../play/play" },
+      { icon: "../Resources/edu_mini.png", title: "互动课堂", desc: "<webrtc-room>", navigateTo: "../webrtcroom/roomlist/roomlist"}
     ]
   },
 

@@ -20,7 +20,7 @@
 .guide {
   display: inline-block;
   width: 30vw;
-  height: 30vw;
+  height: 33vw;
   background-color: rgba(0, 0, 0, 0.55);
   text-align: center;
   margin: 1.5px;
@@ -46,6 +46,12 @@
 .guide_label {
   display: block;
   margin-top: 10px;
+  color: #CFE4FF;
+  font-size: 14px;
+}
+.guide_desc {
+  display: block;
+  margin-top: 2px;
   color: #CFE4FF;
   font-size: 14px;
 }

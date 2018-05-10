@@ -57,7 +57,7 @@ Page({
         var self = this;
         wx.showModal({
             title: '提示',
-            content: '请使用PC IE端创建房间【http://img.qcloud.com/open/qcloud/video/act/avtivex_demo/demo/index/IndexDemo.htm】',
+            content: '本功能需要PC端浏览器协助体验:【http://img.qcloud.com/open/qcloud/video/act/liteavWeb/avsolution/Index.html】',
             showCancel: false
         })
        

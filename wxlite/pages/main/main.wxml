@@ -9,9 +9,9 @@
       <block>
         <image class="guide_icon" src="{{item.icon}}" mode="aspectFit" />
         <view class="guide_label">{{item.title}}</view>
+        <view class="guide_desc">{{item.desc}}</view>
       </block>
     </view>
-    <view class='guide-nomore'></view>
   </view>
   <view class='logo-box'>
     <image class='logo' src='../Resources/logo.png'></image>
