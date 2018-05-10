@@ -60,7 +60,7 @@
 </tr>
 </table>
 
-![](https://mc.qcloudimg.com/static/img/9851dba2c86161bc9e14a08b5b82dfd2/image.png)
+![](https://main.qcloudimg.com/raw/31508bafca7b157e528826b75670a906.png)
 
 ## 注册小程序并开通相关接口
 打开 [微信公众平台](https://mp.weixin.qq.com) 注册并登录小程序，并在小程序管理后台的<font color='red'> “设置 - 接口设置” </font>中自助开通该组件权限，如下图所示：
