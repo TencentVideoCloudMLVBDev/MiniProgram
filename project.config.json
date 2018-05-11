@@ -1,8 +1,8 @@
 {
 	"client": "./wxlite",
-	"svr": "./simpleserver",
+	"svr": "./server",
 	"miniprogramRoot": "./wxlite",
-	"qcloudRoot": "./simpleserver",
+	"qcloudRoot": "./server",
 	"appid": "xxxxxxxxxxxxx",
 	"projectname": "rtcroom1.2",
 	"setting": {
