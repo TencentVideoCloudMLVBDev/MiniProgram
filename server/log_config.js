@@ -90,7 +90,7 @@ var logConfig = {
     },
     errorLogger: {
       appenders: ['errorLogger'],
-      level: 'error'
+      level: 'info'
     },
 
     resLogger: {
