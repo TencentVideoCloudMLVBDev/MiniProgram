@@ -71,13 +71,18 @@ const CONF = {
 
     /**
      *  云通信 派发usersig 采用非对称加密算法RSA，用私钥生成签名。privateKey就是用于生成签名的私钥，私钥文件可以在互动直播控制台获取
-     *  配置privateKey 
-     *  方式1. 将下载下来的keys.zip文件解压，拷贝其中的 private_key 文件到server/ 目录下 （推荐）
-     *  方式2. 将private_key文件的内容按下面的方式填写到 privateKey字段。
-     *  程序发现server目录下有private_key 文件会优先用文件。
-     *  详细的代码逻辑，可以参见 server/logic/im_mgr.js 文件，getSig函数的实现
-     */ 
+     *  配置privateKey
+     *  将private_key文件的内容按下面的方式填写到 privateKey字段。
+     */
+
     privateKey: "-----BEGIN PRIVATE KEY-----\r\n" + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n" + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n" + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n" + "-----END PRIVATE KEY-----\r\n"
+  
+  
+    /**
+     * 云通信 验证usersig 所用的公钥
+     */
+    publicKey: '-----BEGIN PUBLIC KEY-----\r\n' + 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n' + 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n' + '-----END PUBLIC KEY-----\r\n'
+  
   },
 
   /**
