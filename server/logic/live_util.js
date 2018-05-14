@@ -152,15 +152,18 @@ function mergeStream (mergeParam) {
     form: JSON.stringify(data)
   }
 
-  console.log('step1')
   return new Promise(function (resolve, reject) {
     request.post(myreq, function (error, rsp, body) {
       if (!error && rsp.statusCode == 200) {
-        console.log('step2')
-        resolve(JSON.parse(body))
+        try {
+           resolve(JSON.parse(body))
+        }catch(e){
+           console.log('merge_stream call result: body is not json string')
+           resolve({})
+        }
       } else {
-        console.log('step3')
-        reject(error)
+        console.log('merge_stream call result: request error')
+        resolve({})
       }
     })
   })
