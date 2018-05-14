@@ -60,12 +60,12 @@
 </tr>
 </table>
 
-![](https://main.qcloudimg.com/raw/31508bafca7b157e528826b75670a906.png)
+![](https://github.com/TencentVideoCloudMLVBDev/MiniProgram/raw/master/image/xiaochengxu_entrance.png)
 
 ## 注册小程序并开通相关接口
 打开 [微信公众平台](https://mp.weixin.qq.com) 注册并登录小程序，并在小程序管理后台的<font color='red'> “设置 - 接口设置” </font>中自助开通该组件权限，如下图所示：
 
-![](https://mc.qcloudimg.com/static/img/a34df5e3e86c9b0fcdfba86f8576e06a/weixinset.png)
+![](https://github.com/TencentVideoCloudMLVBDev/MiniProgram/raw/master/image/weixinset.png)
 
 > 注意：如果以上设置都正确，但小程序依然不能正常工作，可能是微信内部的缓存没更新，请删除小程序并重启微信后，再进行尝试。
 
@@ -73,7 +73,7 @@
 
 下载并安装最新版本的[微信开发者工具](https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html)，使用小程序绑定的微信号扫码登录开发者工具。
 
-<img style="border:0; max-width:100%; height:auto; box-sizing:content-box; box-shadow: 0px 0px 0px #ccc; margin: 0px 0px 0px 0px;" src="https://main.qcloudimg.com/raw/8e1eeee23aec979f346d4b4c05e62571.png" />
+<img style="border:0; max-width:100%; height:auto; box-sizing:content-box; box-shadow: 0px 0px 0px #ccc; margin: 0px 0px 0px 0px;" src="https://github.com/TencentVideoCloudMLVBDev/MiniProgram/raw/master/image/wx_dev_tool.png" />
 
 
 ## 获取Demo源码并调试
@@ -90,7 +90,7 @@
 
 - step6: <font color='red'>开启调试模式</font>，体验和调试内部功能。开启调试可以跳过把这些域名加入小程序白名单的工作。
 
-<img style="border:0; max-width:100%; height:auto; box-sizing:content-box; box-shadow: 0px 0px 0px #ccc; margin: 0px 0px 0px 0px;" src="https://main.qcloudimg.com/raw/a7c8b00d20011ef19046884967258636.png" />
+<img style="border:0; max-width:100%; height:auto; box-sizing:content-box; box-shadow: 0px 0px 0px #ccc; margin: 0px 0px 0px 0px;" src="https://github.com/TencentVideoCloudMLVBDev/MiniProgram/raw/master/image/wx_open_debug.png" />
 
 ## Demo访问的测试地址
 Demo小程序会访问如下表格中的测试服务器地址，这些服务器使用的云服务是我们为大家提供的一个体验账号，平时很多客户都会在上面做测试。如果您希望使用自己的后台服务器，以免被其他客户打扰，请关注文档后一节内容：
