@@ -215,10 +215,10 @@ https://您自己的域名/roomservice/
 * WebRTC服务端(Java)
 	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/webrtc_server_java/blob/master/doc/protocol.md) - 服务端项目结构及简介
 	- [协议文档](https://github.com/TencentVideoCloudMLVBDev/webrtc_server_java/blob/master/doc/codeStructure.md) - 后台协议文档
-* RTCRoom服务端(Java)
+* RoomService服务端(Java)
 	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/roomservice_java/blob/master/doc/codeStructure.md) - 服务端项目结构及简介
 	- [协议文档](https://github.com/TencentVideoCloudMLVBDev/roomservice_java/blob/master/doc/protocol.md) - 后台协议文档
-* RTCRoom服务端(NodeJS)
+* RoomService服务端(NodeJS)
 	- [项目结构](https://github.com/TencentVideoCloudMLVBDev/MiniProgram/blob/master/doc/server%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84_NodeJS.md) - 服务端项目结构及简介
 	- [协议文档](https://github.com/TencentVideoCloudMLVBDev/MiniProgram/blob/master/doc/server%E5%8D%8F%E8%AE%AE%E6%96%87%E6%A1%A3_NodeJS.md) - 后台协议文档
 
