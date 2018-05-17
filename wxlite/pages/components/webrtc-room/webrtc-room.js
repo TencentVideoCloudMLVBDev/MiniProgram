@@ -1,5 +1,5 @@
 const imHandler = require('./im_handler.js');
-const webim = require('./webim_wx.js');
+const webim = require('../../../utils/webim_wx');
 const CONSTANT = require('./config.js');
 
 Component({
@@ -66,31 +66,51 @@ Component({
     enableIM: {
       type: Boolean, //是否启用IM
       value: true
+    },
+
+    // 房间的创建者
+    roomCreator: {
+      type: String,
+      value: ''
     }
     // frontCamera: {type: Boolean, value: true, observer: function (newVal, oldVal) { this.switchCamera(); }},  //设置前后置摄像头，true表示前置
   },
   data: {
+    requestSigFailCount: 0,
+    isCaster: false, // 默认是观众
     CONSTANT, // 常量
     pusherContext: '',
     hasPushStarted: false,
     pushURL: '',
     members: [{}, {}, {}],
+    presenter: [{}], // presenter 代表主播，audience 代表观众
+    audience: [{}, {}],
     maxMembers: 3,
     self: {},
     hasExitRoom: true,
-
+    creator: '',
     ERROR_OPEN_CAMERA: -4, //打开摄像头失败
     ERROR_OPEN_MIC: -5, //打开麦克风失败
     ERROR_PUSH_DISCONNECT: -6, //推流连接断开
     ERROR_CAMERA_MIC_PERMISSION: -7, //获取不到摄像头或者麦克风权限
+    ERROR_EXCEEDS_THE_MAX_MEMBER: -8, // 超过最大成员数
+    ERROR_REQUEST_ROOM_SIG: -9, // 获取房间SIG错误
+    ERROR_JOIN_ROOM: -10 // 进房失败
   },
 
   ready: function () {
+    self = this;
     if (!this.data.pusherContext) {
       this.data.pusherContext = wx.createLivePusherContext('rtcpusher');
     }
-    self = this;
+    this.data.isCaster = this.data.roomCreator === this.data.userID; //是不是主播
+    this.setData({
+      isCaster: this.data.isCaster,
+      creator: this.data.roomCreator
+    });
+    console.log('>>>>>>>>>>>>>>  isCaster:', this.data.isCaster);
   },
+
   detached: function () {
     console.log("组件 detached");
     self.exitRoom();
@@ -110,6 +130,8 @@ Component({
           this.setData({
             maxMembers: 1,
             members: [{}],
+            presenter: [{}],
+            audience: [],
             template: templateName
           });
           break;
@@ -121,6 +143,8 @@ Component({
           this.setData({
             maxMembers: 3,
             members: [{}, {}, {}],
+            presenter: [{}],
+            audience: [{}, {}],
             template: templateName
           });
           break;
@@ -235,9 +259,25 @@ Component({
       for (var i = 0; i < self.data.maxMembers; i++) {
         self.data.members[i] = {};
       }
+
+      var role = this.filterRole();
       self.setData({
-        members: self.data.members
+        members: self.data.members,
+        presenter: role.presenter,
+        audience: role.audience
       });
+    },
+
+    postErrorEvent: function (errCode, errMsg) {
+      self.postEvent('error', errCode, errMsg);
+    },
+
+    postEvent: function (tag, code, detail) {
+      self.triggerEvent('RoomEvent', {
+        tag: tag,
+        code: code,
+        detail: detail
+      }, {});
     },
 
     /**
@@ -245,9 +285,13 @@ Component({
      */
     requestSigServer: function (userSig, privMapEncrypt) {
       console.log('获取sig:', this.data);
+
+      var self = this;
       var roomID = this.data.roomID;
       var userID = this.data.userID;
       var sdkAppID = this.data.sdkAppID;
+
+
       var url = "https://yun.tim.qq.com/v4/openim/jsonvideoapp?sdkappid=" + sdkAppID + "&identifier=" + userID + "&usersig=" + userSig + "&random=9999&contenttype=json";
       var reqHead = {
         "Cmd": 1,
@@ -262,7 +306,7 @@ Component({
         "SdkVersion": 26280566
       };
       console.log("requestSigServer params:", url, reqHead, reqBody);
-      var self = this;
+
       wx.request({
         url: url,
         data: {
@@ -275,10 +319,25 @@ Component({
           if (res.data["RspHead"]["ErrorCode"] != 0) {
             console.log(res.data["RspHead"]["ErrorInfo"]);
             wx.showToast({
+              icon: 'none',
               title: res.data["RspHead"]["ErrorInfo"],
             })
+
+            self.data.requestSigFailCount++;
+            // 重试3次后还是错误，则抛出错误
+            if (self.data.requestSigFailCount > 3) {
+              self.postErrorEvent(self.data.ERROR_REQUEST_ROOM_SIG, '获取房间SIG错误');
+            } else {
+              setTimeout(() => {
+                console.error('>>>>>>>>', '获取房间sig失败，重试~');
+                self.requestSigServer(userSig, privMapEncrypt);
+              }, 2000);
+            }
             return;
           }
+
+          self.data.requestSigFailCount = 0;
+
           var roomSig = JSON.stringify(res.data["RspBody"]);
 
           var pushUrl = "room://cloud.tencent.com?sdkappid=" + sdkAppID + "&roomid=" + roomID + "&userid=" + userID + "&roomsig=" + encodeURIComponent(roomSig);
@@ -287,18 +346,30 @@ Component({
           self.setData({
             pushURL: pushUrl,
             userID: userID
-          })
+          });
         },
         fail: function (res) {
           console.log("requestSigServer fail:", res);
           wx.showToast({
             title: '获取房间签名失败',
-          })
+          });
+
+          self.data.requestSigFailCount++;
+          // 重试3次后还是错误，则抛出错误
+          if (self.data.requestSigFailCount > 3) {
+            self.postErrorEvent(self.data.ERROR_REQUEST_ROOM_SIG, '获取房间SIG错误');
+          } else {
+            setTimeout(() => {
+              console.error('>>>>>>>>', '获取房间sig失败，重试~');
+              self.requestSigServer(userSig, privMapEncrypt);
+            }, 2000);
+          }
         }
       })
     },
 
     onWebRTCUserListPush: function (msg) {
+      console.log('================= onWebRTCUserListPush method', msg);
       if (!msg) {
         return;
       }
@@ -310,6 +381,8 @@ Component({
 
       console.log("onWebRTCUserListPush.jsonDict:", jsonDic);
       var newUserList = jsonDic.userlist;
+      console.log('=== newUserList: ', JSON.stringify(newUserList));
+
       if (!newUserList) {
         return;
       }
@@ -322,6 +395,11 @@ Component({
         };
         pushers.push(pusher);
       });
+
+      // 如果超过了最大人数，则检测出不在members里面的成员，并通知他
+      if (pushers.length > self.data.maxMembers) {
+        self.postErrorEvent(self.data.ERROR_EXCEEDS_THE_MAX_MEMBER, `当前房间超过最大人数${self.data.maxMembers + 1}，请重新进入其他房间体验~`);
+      }
 
       self.onPusherJoin({
         pushers: pushers
@@ -350,8 +428,13 @@ Component({
           self.data.members[emptyIndex] = val;
         }
       });
+
+
+      var role = this.filterRole();
       self.setData({
-        members: self.data.members
+        members: self.data.members,
+        presenter: role.presenter,
+        audience: role.audience
       });
     },
 
@@ -365,11 +448,19 @@ Component({
           }
         }
         if (needDelete) {
+          // if(self.data.members[i] && self.data.members[i].userID) {
+          //   var player = wx.createLivePlayerContext(self.data.members[i].userID);
+          //   player && player.stop();
+          // }
           self.data.members[i] = {};
         }
       }
+
+      var role = this.filterRole();
       self.setData({
-        members: self.data.members
+        members: self.data.members,
+        presenter: role.presenter,
+        audience: role.audience
       });
     },
 
@@ -377,16 +468,22 @@ Component({
     delPusher: function (pusher) {
       for (var i = 0; i < self.data.members.length; i++) {
         if (self.data.members[i].userID == pusher.userID) {
+          var player = wx.createLivePlayerContext(pusher.userID);
+          player && player.stop();
           self.data.members[i] = {};
         }
       }
+      var role = this.filterRole();
       self.setData({
-        members: self.data.members
+        members: self.data.members,
+        presenter: role.presenter,
+        audience: role.audience
       });
     },
 
     // 推流事件
     onPush: function (e) {
+      console.log('============== onPush e userID', this.data.userID);
       if (!self.data.pusherContext) {
         self.data.pusherContext = wx.createLivePusherContext('rtcpusher');
       }
@@ -396,7 +493,7 @@ Component({
       } else {
         code = e;
       }
-      console.log('推流情况：', code);
+      console.log('>>>>>>>>>>>> 推流情况：', code);
       var errmessage = '';
       switch (code) {
         case 1002:
@@ -407,21 +504,21 @@ Component({
         case -1301:
           {
             console.error('打开摄像头失败: ', code);
-            self.fireRoomErrorEvent(self.data.ERROR_OPEN_CAMERA, '打开摄像头失败');
+            self.postErrorEvent(self.data.ERROR_OPEN_CAMERA, '打开摄像头失败');
             self.exitRoom();
             break;
           }
         case -1302:
           {
             console.error('打开麦克风失败: ', code);
-            self.fireRoomErrorEvent(self.data.ERROR_OPEN_MIC, '打开麦克风失败');
+            self.postErrorEvent(self.data.ERROR_OPEN_MIC, '打开麦克风失败');
             self.exitRoom();
             break;
           }
         case -1307:
           {
             console.error('推流连接断开: ', code);
-            self.fireRoomErrorEvent(self.data.ERROR_PUSH_DISCONNECT, '推流连接断开');
+            self.postErrorEvent(self.data.ERROR_PUSH_DISCONNECT, '推流连接断开');
             self.exitRoom();
             break;
           }
@@ -440,6 +537,7 @@ Component({
         case 1019:
           {
             console.log('退出房间', code);
+            self.postErrorEvent(self.data.ERROR_JOIN_ROOM, '加入房间异常，请重试');
             break;
           }
         case 1020:
@@ -455,9 +553,10 @@ Component({
             self.exitRoom();
 
             //再重新进入房间
-            this.setData({
-              retryIndex: 5,
-            })
+            // this.setData({
+            //   retryIndex: 5,
+            // })
+
             self.start();
 
             break;
@@ -484,11 +583,12 @@ Component({
       console.log('推流错误：', e);
       e.detail.errCode == 10001 ? (e.detail.errMsg = '未获取到摄像头功能权限，请删除小程序后重新打开') : '';
       e.detail.errCode == 10002 ? (e.detail.errMsg = '未获取到录音功能权限，请删除小程序后重新打开') : '';
-      self.fireRoomErrorEvent(self.data.ERROR_CAMERA_MIC_PERMISSION, e.detail.errMsg || '未获取到摄像头、录音功能权限，请删除小程序后重新打开')
+      self.postErrorEvent(self.data.ERROR_CAMERA_MIC_PERMISSION, e.detail.errMsg || '未获取到摄像头、录音功能权限，请删除小程序后重新打开')
     },
 
     //播放器live-player回调
     onPlay: function (e) {
+      console.log('>>>>>>>>>>>> onPlay code:', e.detail.code);
       self.data.members.forEach(function (val) {
         if (e.currentTarget.id == val.userID) {
           switch (e.detail.code) {
@@ -517,9 +617,42 @@ Component({
           }
         }
       });
+
+      var role = this.filterRole();
       self.setData({
-        members: self.data.members
-      })
+        members: self.data.members,
+        presenter: role.presenter,
+        audience: role.audience
+      });
+    },
+
+    filterRole() {
+      var presenter = [];
+      var audience = [];
+      for (var i = 0; i < self.data.members.length; i++) {
+        if (self.data.members[i].userID == this.data.creator) {
+          presenter.push(self.data.members[i]);
+        } else {
+          audience.push(self.data.members[i]);
+        }
+      }
+
+      if (this.data.isCaster) { // 如果自己是主播
+
+      } else { // 如果自己不是主播
+        if (self.data.maxMembers === 3 && audience.length > 2) { // 如果是1pusher 3个player
+          audience = audience.slice(0, 2); // 只有2个观众
+        }
+
+        if (!presenter.length) { // 如果主播没有, 要保证有一个主播
+          presenter = [{}];
+        }
+      }
+
+      return {
+        presenter,
+        audience
+      }
     },
 
     // IM登录监听
@@ -532,21 +665,21 @@ Component({
         },
 
         // 监听新消息(直播聊天室)事件，直播场景下必填
-        onBigGroupMsgNotify(msgs) { 
+        onBigGroupMsgNotify(msgs) {
           if (msgs.length) { // 如果有消息才处理
             self.fireIMEvent(CONSTANT.IM.BIG_GROUP_MSG_NOTIFY, 0, msgs);
           }
         },
 
         // 监听新消息函数，必填
-        onMsgNotify(msgs) { 
+        onMsgNotify(msgs) {
           if (msgs.length) { // 如果有消息才处理
             self.fireIMEvent(CONSTANT.IM.MSG_NOTIFY, 0, msgs);
           }
         },
 
         // 监听（多终端同步）群系统消息事件，必填
-        onGroupSystemNotifys() { 
+        onGroupSystemNotifys() {
           return {
             "1": (notify) => {
               self.fireIMErrorEvent(CONSTANT.IM.GROUP_SYSTEM_NOTIFYS, 1, notify);
@@ -609,6 +742,15 @@ Component({
       imHandler.sendGroupMsg(msg, succ, fail);
     },
 
+    /**
+     * 发送C2C消息
+     * @param {*} msg 
+     * @param {*} succ 
+     * @param {*} fail 
+     */
+    sendC2CCustomMsg(toUser, msg, succ, fail) {
+      imHandler.sendC2CCustomMsg(toUser, msg, succ, fail);
+    },
 
     /**
      * IM错误信息

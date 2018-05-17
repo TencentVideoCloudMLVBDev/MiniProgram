@@ -1,6 +1,6 @@
 <view class="container-box">
 		<view class="camera-box">
-				<webrtc-room id="webrtcroom" template="1u3d" roomID="{{roomID}}" userID="{{userID}}" userSig="{{userSig}}" sdkAppID="{{sdkAppID}}" accountType="{{accountType}}" privateMapKey="{{privateMapKey}}" beauty="{{beauty}}" muted="{{muted}}" debug="{{debug}}" bindRoomEvent="onRoomEvent" bindIMEvent="onIMEvent" enableIM="true"></webrtc-room>
+				<webrtc-room id="webrtcroom" template="1u3d" roomID="{{roomID}}" userID="{{userID}}" roomCreator="{{roomCreator}}" userSig="{{userSig}}" sdkAppID="{{sdkAppID}}" accountType="{{accountType}}" privateMapKey="{{privateMapKey}}" beauty="{{beauty}}" muted="{{muted}}" debug="{{debug}}" bindRoomEvent="onRoomEvent" bindIMEvent="onIMEvent" enableIM="true"></webrtc-room>
 		</view>
 		<view class="operate">
 				<view class="img-box">
@@ -23,12 +23,12 @@
 		<view class="switchtab">
 				<view bindtap="showComment" class="tab ">
 						<view class="text {{showInteractType === SHOWINTERACT_TYPE.COMMENT ? 'checked' : ''}}">
-								课堂聊天
+								聊天
 						</view>
 				</view>
 				<view bindtap="showBoard" class="tab" wx:if="{{role === ROLE_TYPE.AUDIENCE}}">
 						<view class="text {{showInteractType === SHOWINTERACT_TYPE.BOARD ? 'checked' : ''}}">
-								课堂白板
+								白板
 						</view>
 				</view>
 		</view>

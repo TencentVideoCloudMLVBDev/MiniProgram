@@ -1,4 +1,4 @@
-const webim = require('./webim_wx.js');
+const webim = require('../../../utils/webim_wx');
 
 module.exports = {
   initData(userData, groupData) {
@@ -140,6 +140,22 @@ module.exports = {
   },
 
   /**
+   * 发送C2C消息
+   * @param {*} msg 
+   * @param {*} succ 
+   * @param {*} fail 
+   */
+  sendC2CCustomMsg(toUser, msg, succ, fail) {
+    var imMsgObj = this.formatC2CCustomMsg(toUser, msg);
+    //调用发送消息接口
+    webim.sendMsg(imMsgObj, (resp) => {
+      succ && succ(resp);
+    }, function (err) {
+      fail && fail(err);
+    });
+  },
+
+  /**
    * 组织自定义消息体
    * @param {*} msg 要发送的消息
    * @param {*} succ 
@@ -172,6 +188,32 @@ module.exports = {
       subType = webim.C2C_MSG_SUB_TYPE.COMMON;
     }
     var msg = new webim.Msg(this.selSess, isSend, seq, random, msgTime, this.userData.identifier, subType, this.userData.identifierNick);
+
+    var custom_obj = new webim.Msg.Elem.Custom(data, desc, ext);
+    msg.addCustom(custom_obj);
+    return msg;
+  },
+
+  /**
+   * G
+   * @param {*} toUserID 
+   * @param {*} msg 
+   */
+  formatC2CCustomMsg(toUserID, msg) {
+    // custom消息
+    var data = msg.data || '';
+    var desc = msg.desc || '';
+    var ext = msg.ext || '';
+
+    var msgLen = webim.Tool.getStrBytes(data);
+
+    var session = new webim.Session(webim.SESSION_TYPE.C2C, toUserID, toUserID, '', Math.round(new Date().getTime() / 1000));
+    var isSend = true; //是否为自己发送
+    var seq = -1; //消息序列，-1表示sdk自动生成，用于去重
+    var random = Math.round(Math.random() * 4294967296); //消息随机数，用于去重
+    var msgTime = Math.round(new Date().getTime() / 1000); //消息时间戳
+    var subType = webim.C2C_MSG_SUB_TYPE.COMMON; //消息子类型 
+    var msg = new webim.Msg(session, isSend, seq, random, msgTime, this.userData.identifier, subType, this.userData.identifierNick);
 
     var custom_obj = new webim.Msg.Elem.Custom(data, desc, ext);
     msg.addCustom(custom_obj);

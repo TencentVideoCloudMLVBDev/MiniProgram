@@ -4,7 +4,7 @@
     <view>当前没有任何房间</view>
     <view>请点击新建房间</view>
   </view>
-  <view wx:for="{{roomList}}" class="list-box" bindtap="goRoom" data-roomid="{{item.roomID}}" data-roomname="{{item.roomInfo}}"> 
+  <view wx:for="{{roomList}}" class="list-box" bindtap="goRoom" data-roomid="{{item.roomID}}" data-roomname="{{item.roomInfo}}" data-roomcreator="{{item.roomCreator}}"> 
     <view>
         <view class='list-info'>房间名: {{item.roomInfo}}</view>
         <view class='list-info'>房间ID: {{item.roomID}}</view>

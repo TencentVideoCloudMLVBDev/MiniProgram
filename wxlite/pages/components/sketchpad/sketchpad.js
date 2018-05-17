@@ -8,7 +8,7 @@ Component({
 	properties: {
 		addData: {
 			type: Object,
-			observer: function(newVal, oldVal) {
+			observer: function (newVal, oldVal) {
 				if (oldVal) {
 					console.log('addData: ', newVal);
 					this.addData(newVal);
@@ -26,24 +26,30 @@ Component({
 		height: {
 			type: Number,
 			value: 211,
-			observer: function(newVal, oldVal) {
-				this.setData({height: newVal});
+			observer: function (newVal, oldVal) {
+				this.setData({
+					height: newVal
+				});
 				this.data.needDraw = true;
 			}
 		}, // 显示高度
 		width: {
 			type: Number,
 			value: 375,
-			observer: function(newVal, oldVal) {
-				this.setData({width: newVal});
+			observer: function (newVal, oldVal) {
+				this.setData({
+					width: newVal
+				});
 				this.data.needDraw = true;
 			}
 		}, // 显示宽度
 		horizontal: {
 			type: Boolean,
 			value: true,
-			observer: function(newVal, oldVal) {
-				this.setData({horizontal: newVal});
+			observer: function (newVal, oldVal) {
+				this.setData({
+					horizontal: newVal
+				});
 				this.data.needDraw = true;
 			}
 		} // 是否水平
@@ -58,7 +64,13 @@ Component({
 		needDraw: true, // 是否需要重绘
 		data: {}, // 全部数据
 		userData: {}, // 用户维度的数据
-		backgroundPic: {}, // 背景图
+		backgroundPic: {
+			type: Object,
+			value: {},
+			observer: function (newVal, oldVal) {
+				debugger
+			}
+		}, // 背景图
 		backgroundColor: '#ffffff',
 		currentBoard: '#DEFAULT', // 当前画板
 		boardList: ['#DEFAULT'], // 画板列表
@@ -67,7 +79,7 @@ Component({
 		thin: 100, // 默认画笔宽度
 		horizontal: true
 	},
-	ready: function() {
+	ready: function () {
 		this.init();
 		this.imgLoader = new ImgLoader(this);
 		// this.fileCache = new FileCache();
@@ -79,7 +91,7 @@ Component({
 	},
 
 	methods: {
-		addData: function(data) {
+		addData: function (data) {
 			if (!data.value) {
 				return;
 			}
@@ -107,7 +119,11 @@ Component({
 						return;
 					}
 					let line = this.data.userData[boardId][user][length - 1];
-					line.lines.push({x: action.x, y: action.y, seq: action.seq});
+					line.lines.push({
+						x: action.x,
+						y: action.y,
+						seq: action.seq
+					});
 					line.setBorder(action.x, action.y);
 					if (action.action == 3) {
 						line.endSeq = action.seq;
@@ -121,13 +137,13 @@ Component({
 						for (var i = 0; i < this.data.userData[boardId][line.uid].length; i++) {
 							var item = this.data.userData[boardId][line.uid][i];
 							if (item.type == 'line' && item.startSeq == line.seq) {
-								item.show = action.display
-									? true
-									: false;
+								item.show = action.display ?
+									true :
+									false;
 							} else if (item.type == 'graph' && item.startPoint.seq == line.seq) {
-								item.show = action.display
-									? true
-									: false;
+								item.show = action.display ?
+									true :
+									false;
 							}
 						}
 					});
@@ -142,9 +158,9 @@ Component({
 					action.endPoint.x = action.endPoint.x;
 					action.beginPoint.y = action.beginPoint.y;
 					action.endPoint.y = action.endPoint.y;
-					action.solid = action.fillRect
-						? true
-						: false;
+					action.solid = action.fillRect ?
+						true :
+						false;
 					action.show = true;
 					var graph = new tools.Graph(user, action);
 
@@ -165,17 +181,25 @@ Component({
 					action.deleteBoards.forEach((deleteBoardId) => {
 						this.removeBoard(deleteBoardId);
 					})
-					this.setData({currentBoard: boardId})
+					this.setData({
+						currentBoard: boardId
+					})
 				}
 			});
 			this.data.needDraw = true;
 		},
-		addHistory: function() {}, // 这版暂无历史消息
-		setBackgroundPic: function(boardId, url) {
+
+		updateCurrentBoard(currentBoard) {
+			this.data.currentBoard = currentBoard;
+		},
+
+		addHistory: function () {}, // 这版暂无历史消息
+		setBackgroundPic: function (boardId, url) {
 			let self = this;
-			let temp = Object.assign({}, this.data.backgroundPic);
-			temp[boardId].url = url;
-			temp[boardId].show = true;
+			let temp = {};
+			temp.url = url;
+			temp.show = true;
+
 			if (this.data.currentBoard == boardId) {
 				// wx.showLoading({title: '图片加载中'}); // 因为提示在整体UI的中心，randewang 建议屏蔽不要提示
 			}
@@ -188,22 +212,27 @@ Component({
 			// 	temp[boardId].url = res.tmpFilePath;
 			// 	self.setData({backgroundPic: temp});
 			// })
+
 			this.imgLoader.load(url, (err, data) => {
 				console.log('图片加载完成', err, data.src)
-				if (!err)
-					self.setData({backgroundPic: temp});
-				}
-			);
+				//不管成功或者失败都都加入进去，缓存的失败不一定代表真正的失败
+				self.data.backgroundPic[boardId] = temp;
+				this.setData({
+					backgroundPic: self.data.backgroundPic
+				});
+			});
 			wx.hideLoading();
 			this.data.needDraw = true;
 		},
-		cancelBackgroundPic: function(boardId) {
+		cancelBackgroundPic: function (boardId) {
 			let temp = Object.assign({}, this.data.backgroundPic);
 			temp[boardId].show = false;
-			this.setData({backgroundPic: temp});
+			this.setData({
+				backgroundPic: temp
+			});
 			this.data.needDraw = true;
 		},
-		initBoard: function(boardId) {
+		initBoard: function (boardId) {
 			this.data.userData[boardId] = {};
 			this.data.userData[boardId][this.properties.user] = [];
 			this.data.data[boardId] = [];
@@ -213,17 +242,19 @@ Component({
 				user: this.properties.user,
 				show: true
 			};
-			this.setData({backgroundPic: temp});
+			this.setData({
+				backgroundPic: temp
+			});
 			this.data.boardList.push(boardId);
 		},
-		removeBoard: function(boardId) {
+		removeBoard: function (boardId) {
 			delete this.data.userData[boardId];
 			delete this.data.data[boardId];
 			if (this.data.boardList.indexOf(boardId) > -1) {
 				this.data.boardList.splice(this.data.boardList.indexOf(boardId), 1);
 			}
 		},
-		getEventLocation: function(event) {
+		getEventLocation: function (event) {
 			let result = {
 				x: 0,
 				y: 0
@@ -236,7 +267,7 @@ Component({
 			result.y = parseInt(result.y / this.data.height * 10000);
 			return result;
 		},
-		draw: function() {
+		draw: function () {
 			// 先清空画板
 			// this.data.ctx.clearRect(0, 0, this.data.width, this.data.height);
 			if (this.data.backgroundPic[this.data.currentBoard].url && this.data.backgroundPic[this.data.currentBoard].show) {
@@ -251,9 +282,9 @@ Component({
 			this.data.data[this.data.currentBoard].forEach((item) => {
 				if (item.type == 'line' && item.show) {
 					// 画的时候 要反转 xy
-					let oldx = this.data.horizontal
-						? item.lines[0].x / 10000 * this.data.width
-						: ((10000 - item.lines[0].x) / 10000 * this.data.width);
+					let oldx = this.data.horizontal ?
+						item.lines[0].x / 10000 * this.data.width :
+						((10000 - item.lines[0].x) / 10000 * this.data.width);
 					let oldy = item.lines[0].y / 10000 * this.data.height;
 
 					item.lines.forEach((lineItem) => {
@@ -264,9 +295,9 @@ Component({
 						} else {
 							this.data.ctx.moveTo(oldx, oldy);
 						}
-						let tempx = this.data.horizontal
-							? lineItem.x / 10000 * this.data.width
-							: ((10000 - lineItem.x) / 10000 * this.data.width);
+						let tempx = this.data.horizontal ?
+							lineItem.x / 10000 * this.data.width :
+							((10000 - lineItem.x) / 10000 * this.data.width);
 						let tempy = lineItem.y / 10000 * this.data.height;
 						if (!this.data.horizontal) {
 							this.data.ctx.lineTo(tempy, tempx);
@@ -274,9 +305,9 @@ Component({
 							this.data.ctx.lineTo(tempx, tempy);
 						}
 						this.data.ctx.setStrokeStyle(item.color);
-						let thin = this.data.horizontal
-							? item.thin / 10000 * this.data.height
-							: item.thin / 10000 * this.data.width;
+						let thin = this.data.horizontal ?
+							item.thin / 10000 * this.data.height :
+							item.thin / 10000 * this.data.width;
 						this.data.ctx.setLineWidth(thin);
 						this.data.ctx.setLineCap("round");
 						this.data.ctx.stroke();
@@ -285,14 +316,14 @@ Component({
 						oldy = tempy;
 					});
 				} else if (item.type == 'graph' && item.show) {
-					let startX = this.data.horizontal
-						? item.startPoint.x / 10000 * this.data.width
-						: ((10000 - item.startPoint.x) / 10000 * this.data.width);
+					let startX = this.data.horizontal ?
+						item.startPoint.x / 10000 * this.data.width :
+						((10000 - item.startPoint.x) / 10000 * this.data.width);
 					let startY = item.startPoint.y / 10000 * this.data.height;
 
-					let endX = this.data.horizontal
-						? item.endPoint.x / 10000 * this.data.width
-						: ((10000 - item.endPoint.x) / 10000 * this.data.width);
+					let endX = this.data.horizontal ?
+						item.endPoint.x / 10000 * this.data.width :
+						((10000 - item.endPoint.x) / 10000 * this.data.width);
 					let endY = item.endPoint.y / 10000 * this.data.height;
 
 					if (item.graph == 'line') { // 画直线
@@ -305,25 +336,25 @@ Component({
 							this.data.ctx.lineTo(endX, endY);
 						}
 						this.data.ctx.setStrokeStyle(item.color);
-						let thin = this.data.horizontal
-							? item.thin / 10000 * this.data.height
-							: item.thin / 10000 * this.data.width;
+						let thin = this.data.horizontal ?
+							item.thin / 10000 * this.data.height :
+							item.thin / 10000 * this.data.width;
 						this.data.ctx.setLineWidth(thin);
 						this.data.ctx.setLineCap("round");
 						this.data.ctx.stroke();
 					} else if (item.graph == 'rect') {
-						let x = startX > endX
-							? endX
-							: startX;
-						let y = startY > endY
-							? endY
-							: startY;
+						let x = startX > endX ?
+							endX :
+							startX;
+						let y = startY > endY ?
+							endY :
+							startY;
 						let diffX = startX + endX - x * 2;
 						let diffY = startY + endY - y * 2;
 						this.data.ctx.setStrokeStyle(item.color);
-						let thin = this.data.horizontal
-							? item.thin / 10000 * this.data.height
-							: item.thin / 10000 * this.data.width;
+						let thin = this.data.horizontal ?
+							item.thin / 10000 * this.data.height :
+							item.thin / 10000 * this.data.width;
 						this.data.ctx.setLineWidth(thin);
 						console.log('画矩形');
 						if (item.solid) {
@@ -348,9 +379,9 @@ Component({
 						let a = Math.abs(startX - endX) / 2;
 						let b = Math.abs(startY - endY) / 2;
 						this.data.ctx.setStrokeStyle(item.color);
-						let thin = this.data.horizontal
-							? item.thin / 10000 * this.data.height
-							: item.thin / 10000 * this.data.width;
+						let thin = this.data.horizontal ?
+							item.thin / 10000 * this.data.height :
+							item.thin / 10000 * this.data.width;
 						this.data.ctx.setLineWidth(thin);
 						if (!this.data.horizontal) {
 							this.drawEllipse2(this.data.ctx, y, x, b, a, item.solid, item.color);
@@ -363,11 +394,11 @@ Component({
 			});
 			this.data.ctx.draw(true);
 		},
-		drawEllipse: function(context, x, y, a, b, fill, color) {
+		drawEllipse: function (context, x, y, a, b, fill, color) {
 			context.save();
-			let r = (a > b)
-				? a
-				: b;
+			let r = (a > b) ?
+				a :
+				b;
 			let ratioX = a / r;
 			let ratioY = b / r;
 			context.beginPath();
@@ -380,10 +411,10 @@ Component({
 			}
 			context.restore();
 		},
-		drawEllipse2: function(context, x, y, a, b, fill, color) {
-			var step = (a > b)
-				? 1 / a
-				: 1 / b;
+		drawEllipse2: function (context, x, y, a, b, fill, color) {
+			var step = (a > b) ?
+				1 / a :
+				1 / b;
 			context.beginPath();
 			context.moveTo(x + a, y);
 			for (var i = 0; i < 2 * Math.PI; i += step) {
@@ -395,12 +426,15 @@ Component({
 				context.fill();
 			}
 		},
-		start: function(e) {
+		start: function (e) {
 			console.log('-----START', this.properties.canDraw);
 			if (!this.properties.canDraw) {
 				return;
 			}
-			let {x, y} = this.getEventLocation(e);
+			let {
+				x,
+				y
+			} = this.getEventLocation(e);
 			let line = new tools.Line(this.properties.user, {
 				color: this.data.color,
 				thin: this.data.thin,
@@ -416,21 +450,24 @@ Component({
 				"color": tools.formatColor(this.data.color),
 				"scale": 100,
 				"thin": this.data.thin,
-				"time": parseInt(+ new Date() / 1000),
+				"time": parseInt(+new Date() / 1000),
 				"seq": line.seq,
-				"x": this.data.horizontal
-					? x
-					: y,
-				"y": this.data.horizontal
-					? y
-					: x
+				"x": this.data.horizontal ?
+					x :
+					y,
+				"y": this.data.horizontal ?
+					y :
+					x
 			});
 		},
-		move: function(e) {
+		move: function (e) {
 			if (!this.properties.canDraw) {
 				return;
 			}
-			let {x, y} = this.getEventLocation(e);
+			let {
+				x,
+				y
+			} = this.getEventLocation(e);
 			let length = this.data.userData[this.data.currentBoard][this.properties.user].length;
 			let line = this.data.userData[this.data.currentBoard][this.properties.user][length - 1];
 			let lastPoint = line.lines[line.lines.length - 1];
@@ -439,9 +476,9 @@ Component({
 			this.data.ctx.moveTo(lastPoint.x / 10000 * this.data.width, lastPoint.y / 10000 * this.data.height);
 			this.data.ctx.lineTo(x / 10000 * this.data.width, y / 10000 * this.data.height);
 			this.data.ctx.setStrokeStyle(this.data.color);
-			let thin = this.data.horizontal
-				? this.data.thin / 10000 * this.data.height
-				: this.data.thin / 10000 * this.data.width;
+			let thin = this.data.horizontal ?
+				this.data.thin / 10000 * this.data.height :
+				this.data.thin / 10000 * this.data.width;
 			this.data.ctx.setLineWidth(thin);
 			this.data.ctx.setLineCap('round');
 			this.data.ctx.stroke();
@@ -450,40 +487,51 @@ Component({
 
 			line.setBorder(x, y);
 			let seq = this.getSeq();
-			line.lines.push({x: x, y: y, seq: seq});
+			line.lines.push({
+				x: x,
+				y: y,
+				seq: seq
+			});
 			this.data.sendData.push({
 				"action": 2,
 				"seq": seq,
-				"x": this.data.horizontal
-					? x
-					: y,
-				"y": this.data.horizontal
-					? y
-					: x
+				"x": this.data.horizontal ?
+					x :
+					y,
+				"y": this.data.horizontal ?
+					y :
+					x
 			});
 		},
-		end: function(e) {
+		end: function (e) {
 			if (!this.properties.canDraw) {
 				return;
 			}
-			let {x, y} = this.getEventLocation(e);
+			let {
+				x,
+				y
+			} = this.getEventLocation(e);
 			let length = this.data.userData[this.data.currentBoard][this.properties.user].length;
 			let line = this.data.userData[this.data.currentBoard][this.properties.user][length - 1];
 			line.setBorder(x, y);
 			let seq = this.getSeq();
-			line.lines.push({x: x, y: y, seq: seq});
+			line.lines.push({
+				x: x,
+				y: y,
+				seq: seq
+			});
 			this.data.sendData.push({
 				"action": 3,
 				"seq": seq,
-				"x": this.data.horizontal
-					? x
-					: y,
-				"y": this.data.horizontal
-					? y
-					: x
+				"x": this.data.horizontal ?
+					x :
+					y,
+				"y": this.data.horizontal ?
+					y :
+					x
 			});
 		},
-		clear: function() {
+		clear: function () {
 			this.data.data[this.data.currentBoard] = [];
 			this.data.userData[this.data.currentBoard] = {};
 			this.data.userData[this.data.currentBoard][this.properties.user] = [];
@@ -493,12 +541,14 @@ Component({
 				user: '',
 				show: true
 			};
-			this.setData({backgroundPic: temp});
+			this.setData({
+				backgroundPic: temp
+			});
 			this.data.color = tools.dealColor(4278190335);
 			this.data.thin = 100;
 			this.needDraw = true;
 		},
-		init: function() {
+		init: function () {
 			// 修改color
 			this.data.color = tools.dealColor(this.data.color);
 			this.data.data[this.data.currentBoard] = [];
@@ -510,11 +560,12 @@ Component({
 				user: '',
 				show: true
 			};
-			this.setData({backgroundPic: temp})
+			this.setData({
+				backgroundPic: temp
+			})
 			this.data.ctx = wx.createCanvasContext('sketchpad', this);
 			// 计时器
 			this.data.drawInterval = setInterval(() => {
-				console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 				if (this.data.needDraw) {
 					this.draw();
 					this.data.needDraw = false;
@@ -524,13 +575,15 @@ Component({
 			this.data.sendInterval = setInterval(() => {
 				if (this.data.sendData.length > 0) {
 					this.triggerEvent('send', this.data.sendData, {});
-					this.setData({sendData: []});
+					this.setData({
+						sendData: []
+					});
 				}
 			}, 200);
 
 		},
-		getSeq: function() {
-			let time = parseInt(+ new Date() / 1000, 10);
+		getSeq: function () {
+			let time = parseInt(+new Date() / 1000, 10);
 			return time * Math.pow(2, 15) + (this.data.seq++);
 		}
 	}

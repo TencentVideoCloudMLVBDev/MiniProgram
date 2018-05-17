@@ -1,3 +1,5 @@
+
+
 .1u3d.videoview {
   background-repeat:no-repeat;
   background-size: cover;
@@ -5,16 +7,23 @@
   height: 100%;
 }
 
-.1u3d .pusher-box {
+
+.1u3d .pusher-box, .1u3d .player-caster-box {
 	position: relative; 
 	display: block; 
 	overflow: hidden;
-  width: 33.75vw;
-	height: 60vw; 
+  width: 100vw;
+	height: calc(100vw * 9/16); 
 	text-align: center;
   vertical-align: top;
-  margin: 0 auto 2vw;
+  margin-bottom: 1vw;
 }
+
+.1u3d .player-caster-box .player-caster-item {
+  width: 100%;
+  height: 100%;
+}
+
 
 .1u3d live-pusher {
   width: 100%;
@@ -23,18 +32,20 @@
 
 .1u3d .player-box {
 	display:flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
-.1u3d .player-box .player-item {
+.1u3d .player-box .player-item,  .1u3d .player-box .pusher-item{
   position: relative; 
-	display: inline-block; 
-	overflow: hidden;
-  width: 16.875vw;
-	height: 30vw; 
+  overflow: hidden;
+  flex: 1;
+  height: calc(100vw/3 - 2vw/3);
 	text-align: center;
   vertical-align: top;
-  margin: 0 4vw;
+}
+
+.1u3d .player-box .player-item:nth-of-type(2) {
+  margin: 0 1vw;
 }
 
 .1u3d .poster {
@@ -83,4 +94,3 @@
   width: 30px;
   height: 30px;
 }
-
