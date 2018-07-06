@@ -81,46 +81,46 @@ function setReportData(options) {
  * 上报cgi
  */
 function report() {
-  // 有房间id与用户id才上报
-  if (!reportData.str_roomid || !reportData.str_userid) {
-    clearData();
-    return;
-  }
-  // 创建房间不加入上报
-  if (reportData.str_room_creator == reportData.str_userid) {
-    clearData();
-    return;
-  } 
-  var data = reportData;
-  data.str_appid = str_appid;
-  data.str_platform = str_platform;
-  data.str_appversion = str_appversion;
-  data.str_sdkversion = str_sdkversion;
-  data.str_common_version = str_common_version;
-  data.str_nickname = str_nickname;
-  data.str_device = str_device;
-  data.str_device_type = str_device_type;
-  console.log('真正上报数据: ', data);
-  wx.request({
-    url: 'https://roomtest.qcloud.com/weapp/utils/report',
-    data: {
-      reportID: 1,
-      data: data
-    },
-    method: 'POST',
-    header: {
-      'content-type': 'application/json' // 默认值
-    },
-    success: function (ret) { 
-      if(ret.data.code) {
-        console.log('上报失败：' + ret.data.code + ret.data.message);
-      } else {
-        console.log('上报成功');
-      }
-    },
-    fail: function () { console.log('report error') },
-    complete: function () {}
-  });
+  // // 有房间id与用户id才上报
+  // if (!reportData.str_roomid || !reportData.str_userid) {
+  //   clearData();
+  //   return;
+  // }
+  // // 创建房间不加入上报
+  // if (reportData.str_room_creator == reportData.str_userid) {
+  //   clearData();
+  //   return;
+  // } 
+  // var data = reportData;
+  // data.str_appid = str_appid;
+  // data.str_platform = str_platform;
+  // data.str_appversion = str_appversion;
+  // data.str_sdkversion = str_sdkversion;
+  // data.str_common_version = str_common_version;
+  // data.str_nickname = str_nickname;
+  // data.str_device = str_device;
+  // data.str_device_type = str_device_type;
+  // console.log('真正上报数据: ', data);
+  // wx.request({
+  //   url: 'https://roomtest.qcloud.com/weapp/utils/report',
+  //   data: {
+  //     reportID: 1,
+  //     data: data
+  //   },
+  //   method: 'POST',
+  //   header: {
+  //     'content-type': 'application/json' // 默认值
+  //   },
+  //   success: function (ret) { 
+  //     if(ret.data.code) {
+  //       console.log('上报失败：' + ret.data.code + ret.data.message);
+  //     } else {
+  //       console.log('上报成功');
+  //     }
+  //   },
+  //   fail: function () { console.log('report error') },
+  //   complete: function () {}
+  // });
   clearData();
 }
 
