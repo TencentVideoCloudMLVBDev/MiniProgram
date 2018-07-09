@@ -129,7 +129,7 @@ Demo小程序会访问如下表格中的测试服务器地址，这些服务器�
 <td>用于支持小程序里面的一些消息通讯功能</td>
 </tr>
 <tr align="center">
-<td>https://yun.tim.qq.com/v4/openim/jsonvideoapp</td>
+<td>https://official.opensso.tencent-cloud.com/v4/openim/jsonvideoapp</td>
 <td>WebRTC测试后台</td>
 <td>用于请求进入<a href="https://cloud.tencent.com/document/product/454/16914">&lt;webrtc-room&gt;</a> 所需的 userSig 和 privateMapKey</td>
 </tr>

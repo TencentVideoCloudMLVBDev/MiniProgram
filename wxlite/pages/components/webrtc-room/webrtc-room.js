@@ -292,7 +292,7 @@ Component({
       var sdkAppID = this.data.sdkAppID;
 
 
-      var url = "https://yun.tim.qq.com/v4/openim/jsonvideoapp?sdkappid=" + sdkAppID + "&identifier=" + userID + "&usersig=" + userSig + "&random=9999&contenttype=json";
+      var url = "https://official.opensso.tencent-cloud.com/v4/openim/jsonvideoapp?sdkappid=" + sdkAppID + "&identifier=" + userID + "&usersig=" + userSig + "&random=9999&contenttype=json";
       var reqHead = {
         "Cmd": 1,
         "SeqNo": 1,
