@@ -9,11 +9,13 @@ function Line(user, option) {
 	this.thin = option.thin;
 	this.startSeq = option.seq; // 开始点seq
 	this.endSeq = 0; // 结束点seq
+  this.belongSeq = option.belongSeq;
 	// 每一个点  {x, y, seq}
 	this.lines = [
 		{
 			x: option.x,
 			y: option.y,
+      belongSeq: option.belongSeq,
 			seq: option.seq
 		}
 	];
@@ -38,6 +40,13 @@ Line.prototype.setBorder = function(x, y) {
 	if (y - this.thin < this.border.minY) {
 		this.border.minY = y - this.thin;
 	}
+}
+
+Line.prototype.sort = function () {
+  // 给lines排序
+  this.lines.sort(function (a, b) {
+    return a.seq - b.seq;
+  })
 }
 
 function dealColor(color) {
