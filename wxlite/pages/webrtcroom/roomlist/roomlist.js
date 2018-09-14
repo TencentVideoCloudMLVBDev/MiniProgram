@@ -117,24 +117,24 @@ Page({
 		console.log(this.data);
 		var systemInfo = wx.getSystemInfoSync();
 		console.error('系统消息:', systemInfo);
-		if (self.compareVersion(systemInfo.version, '6.6.6') < 0) {
-			var pages = getCurrentPages();
-			if (pages.length > 1 && (pages[pages.length - 1].__route__ == 'pages/webrtcroom/roomlist/roomlist')) {
-				wx.showModal({
-					title: '提示',
-					content: "当前微信版本不支持webrtc功能，请使用6.6.6以上的版本",
-					showCancel: false,
-					complete: function () {
-						pages = getCurrentPages();
-						if (pages.length > 1 && (pages[pages.length - 1].__route__ == 'pages/webrtcroom/roomlist/roomlist')) {
-							wx.navigateBack({
-								delta: 1
-							});
-						}
-					}
-				});
-			}
-		}
+		// if (self.compareVersion(systemInfo.version, '6.6.6') < 0) {
+		// 	var pages = getCurrentPages();
+		// 	if (pages.length > 1 && (pages[pages.length - 1].__route__ == 'pages/webrtcroom/roomlist/roomlist')) {
+		// 		wx.showModal({
+		// 			title: '提示',
+		// 			content: "当前微信版本不支持webrtc功能，请使用6.6.6以上的版本",
+		// 			showCancel: false,
+		// 			complete: function () {
+		// 				pages = getCurrentPages();
+		// 				if (pages.length > 1 && (pages[pages.length - 1].__route__ == 'pages/webrtcroom/roomlist/roomlist')) {
+		// 					wx.navigateBack({
+		// 						delta: 1
+		// 					});
+		// 				}
+		// 			}
+		// 		});
+		// 	}
+		// }
 	},
 
 	/**

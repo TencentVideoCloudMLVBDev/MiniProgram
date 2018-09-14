@@ -1,6 +1,6 @@
 var webrtcroom = require('../../../utils/webrtcroom.js')
 var imHandler = require('./im_handler.js')
-var webim = require('./webim_wx');
+var webim = require('../../../utils/webim_wx');
 
 const SHOWINTERACT_TYPE = {
   BOARD: 1, // 白板
@@ -28,7 +28,6 @@ Page({
     userID: '',
     userSig: '',
     sdkAppID: '',
-    accountType: null,
     roomCreator: '',
     comment: [],
     toview: null,
@@ -41,7 +40,9 @@ Page({
       height: 0
     },
     isErrorModalShow: false,
-    heartBeatFailCount: 0 //心跳失败次数
+    heartBeatFailCount: 0, //心跳失败次数
+    autoplay: true,
+    enableCamera: true
   },
 
   /**
@@ -148,8 +149,21 @@ Page({
               time: msg.time
             });
           } else {
-            // 自定义消息
-            var content = JSON.parse(msg.content);
+            var content
+            try {
+              // 自定义消息
+              content = JSON.parse(msg.content);
+            } catch (error) {
+              // 普通消息
+              this.updateComment({
+                roomID: this.data.roomID,
+                userID: msg.fromAccountNick,
+                userName: msg.userName,
+                message: msg.data,
+                time: msg.time
+              });
+              return;
+            }
             var data = content.data;
             var desc = null;
             try {
@@ -321,7 +335,6 @@ Page({
           userSig: self.data.userSig,
           sdkAppID: self.data.sdkAppID,
           roomID: self.data.roomID,
-          accountType: self.data.accountType,
           privateMapKey: res.data.privateMapKey
         }, function () {
           self.data.webrtcroomComponent.start();
@@ -355,7 +368,6 @@ Page({
           userID: self.data.userID,
           userSig: self.data.userSig,
           sdkAppID: self.data.sdkAppID,
-          accountType: self.data.accountType,
           roomID: self.data.roomID,
           privateMapKey: res.data.privateMapKey
         }, function () {
@@ -458,7 +470,6 @@ Page({
     webrtcroom.getLoginInfo(
       self.data.userID,
       function (res) {
-        self.data.accountType = res.data.accountType;
         self.data.userID = res.data.userID;
         wx.setStorageSync('webrtc_room_userid', self.data.userID);
 
@@ -632,7 +643,7 @@ Page({
         return;
       }
 
-      this.data.webrtcroomComponent.sendGroupMsg({
+      this.data.webrtcroomComponent.sendGroupCustomMsg({
         data: msg, // 要发送的消息内容
         ext: 'TEXT', // 自定义消息的类型
         desc: JSON.stringify({ // 扩展数据

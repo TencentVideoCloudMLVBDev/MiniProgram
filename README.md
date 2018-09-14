@@ -40,7 +40,7 @@
 <tr align="center">
 <td>WebRTC</td>
 <td><a href="https://cloud.tencent.com/document/product/454/16914">&lt;webrtc-room&gt;</a></td>
-<td><a href="http://img.qcloud.com/open/qcloud/video/act/liteavWeb/webrtc/webrtc.html">Chrome</a></td>
+<td><a href="https://sxb.qcloud.com/miniApp/index.html">Chrome</a></td>
 <td>实时音视频</td>
 <td>演示小程序和 Chrome 浏览器的互通能力</td>
 </tr>

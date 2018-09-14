@@ -1,4 +1,4 @@
-const webim = require('./webim_wx.js');
+const webim = require('../../../utils/webim_wx');
 
 module.exports = {
   /**
