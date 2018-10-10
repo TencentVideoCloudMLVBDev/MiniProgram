@@ -1,6 +1,6 @@
 <view class="container-box">
 		<view class="camera-box">
-				<webrtc-room id="webrtcroom" template="1u3d" autoplay="{{autoplay}}" enableCamera="{{enableCamera}}" roomID="{{roomID}}" userID="{{userID}}" roomCreator="{{roomCreator}}" userSig="{{userSig}}" sdkAppID="{{sdkAppID}}" accountType="{{accountType}}" privateMapKey="{{privateMapKey}}" beauty="{{beauty}}" muted="{{muted}}" debug="{{debug}}" bindRoomEvent="onRoomEvent" bindIMEvent="onIMEvent" enableIM="true" useCloud="{{useCloud}}"></webrtc-room>
+				<webrtc-room id="webrtcroom" template="1u3d" autoplay="{{autoplay}}" enableCamera="{{enableCamera}}" roomID="{{roomID}}" userID="{{userID}}" roomCreator="{{roomCreator}}" userSig="{{userSig}}" sdkAppID="{{sdkAppID}}" accountType="{{accountType}}" privateMapKey="{{privateMapKey}}" beauty="{{beauty}}" muted="{{muted}}" debug="{{debug}}" bindRoomEvent="onRoomEvent" bindIMEvent="onIMEvent" enableIM="true"></webrtc-room>
 		</view>
 		<view class="operate">
 				<view class="img-box">

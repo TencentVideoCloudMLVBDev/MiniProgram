@@ -29,7 +29,7 @@
 .guide-nomore {
   display: inline-block;
   width: 30vw;
-  height: 30vw;
+  height: 33vw;
   text-align: center;
   margin: 1.5px;
   vertical-align: top;
@@ -54,9 +54,10 @@
   margin-top: 2px;
   color: #CFE4FF;
   font-size: 14px;
+  white-space:nowrap;
 }
 .guide_nomore_label {
-  margin-top: 30px;
+  margin-top: 36px;
   color: rgba(256, 256, 256, 0.3);
   font-size: 14px;
 }
