@@ -20,7 +20,7 @@ function genAcceleratePlayUrl (userid, txTime) {
 
   var ext = '?' + 'bizid=' + config.live.bizid + '&txSecret=' + txSecret + '&txTime=' + parseInt(txTime.getTime() / 1000).toString(16).toUpperCase()
 
-  var push_url = 'rtmp://' + config.live.bizid + '.liveplay.myqcloud.com/live/' + liveCode + ext
+  var push_url = 'rtmp://' + config.live.playHost + '/live/' + liveCode + ext
   return push_url
 }
 
@@ -43,7 +43,7 @@ function genPushUrl (userid, txTime) {
  */
 function genMixedPlayUrl (userid, stream_type) {
   var liveCode = config.live.bizid + '_' + userid
-  return 'https://' + config.live.bizid + '.liveplay.myqcloud.com/live/' + liveCode + '.flv'
+  return 'https://' + config.live.playHost + '/live/' + liveCode + '.flv'
 }
 
 /**
@@ -57,10 +57,10 @@ function genPlayURLs (userid, txTime) {
   var ext = '?' + 'bizid=' + config.live.bizid + '&txSecret=' + txSecret + '&txTime=' + parseInt(txTime.getTime() / 1000).toString(16).toUpperCase()
 
   var ret = {}
-  ret.url_play_flv = 'http://' + config.live.bizid + '.liveplay.myqcloud.com/live/' + liveCode + '.flv'
-  ret.url_play_rtmp = 'rtmp://' + config.live.bizid + '.liveplay.myqcloud.com/live/' + liveCode
-  ret.url_play_hls = 'http://' + config.live.bizid + '.liveplay.myqcloud.com/live/' + liveCode + '.m3u8'
-  ret.url_play_acc = 'rtmp://' + config.live.bizid + '.liveplay.myqcloud.com/live/' + liveCode + ext
+  ret.url_play_flv = 'http://' + config.live.playHost + '/live/' + liveCode + '.flv'
+  ret.url_play_rtmp = 'rtmp://' + config.live.playHost + '/live/' + liveCode
+  ret.url_play_hls = 'http://' + config.live.playHost + '/live/' + liveCode + '.m3u8'
+  ret.url_play_acc = 'rtmp://' + config.live.playHost + '/live/' + liveCode + ext
   return ret
 }
 
