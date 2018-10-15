@@ -69,7 +69,10 @@ config.js 中`bizid、pushSecretKey、sdkAppID、accountType、administrator和p
     pushSecretKey: '',
 
     // 云直播 推流有效期单位秒 默认7天 
-    validTime: 3600*24*7 
+    validTime: 3600*24*7,
+    
+    // 云直播 播放域名 详情请参考 https://cloud.tencent.com/document/product/267/20276。
+    playHost: 'www.yourcomp.com'
   },
 
   /**
