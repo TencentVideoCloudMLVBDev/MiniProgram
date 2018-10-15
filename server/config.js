@@ -45,7 +45,10 @@ const CONF = {
 
 
     // 云直播 推流有效期单位秒 默认7天 
-    validTime: 3600*24*7 
+    validTime: 3600*24*7,
+    
+    // 云直播 播放域名 详情请访问腾讯云官方文档：https://cloud.tencent.com/document/product/267/20276。（填写 云直播控制台->域名管理->播放域名 该域名是cname到腾讯云的直播cdn域名的）。
+    playHost: 'www.yourcomp.com'
   },
 
   /**
