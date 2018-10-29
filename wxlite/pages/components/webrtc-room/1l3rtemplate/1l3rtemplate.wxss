@@ -1,4 +1,4 @@
-.1l3r.videoview {
+.t1l3r.videoview {
   background-repeat:no-repeat;
   background-size: cover;
   width: 100%;
@@ -6,7 +6,7 @@
   display: flex;
 }
 
-.1l3r .pusher-box {
+.t1l3r .pusher-box {
 	position: relative; 
 	flex: 3;
 	overflow: hidden;
@@ -15,19 +15,19 @@
   vertical-align: top;
 }
 
-.1l3r live-pusher {
+.t1l3r live-pusher {
   width: 100%;
 	height: 100%; 
 }
 
-.1l3r .player-box {
+.t1l3r .player-box {
 	flex: 2;
   display: flex;
   flex-direction: column;
   margin-left: 4vw;
 }
 
-.1l3r .player-box .player-item {
+.t1l3r .player-box .player-item {
   flex: 1;
   position: relative; 
 	overflow: hidden;
@@ -35,18 +35,18 @@
   vertical-align: top;
 }
 
-.1l3r .player-box .player-item:nth-of-type(2) {
+.t1l3r .player-box .player-item:nth-of-type(2) {
   margin: 1vw 0;
 }
 
-.1l3r .poster {
+.t1l3r .poster {
 	position: absolute;  
     width: 100%;
 	height: 100%; 
 	background-color: #000;
   opacity:0.55;
 }
-.1l3r .set {
+.t1l3r .set {
   position: absolute;
   width: 32px;
   height: 56px;
@@ -55,12 +55,12 @@
   margin: -28px 0 0 -16px;
 }
 
-.1l3r live-player {
+.t1l3r live-player {
   width: 100%;
 	height: 100%; 
 }
 
-.1l3r .character {
+.t1l3r .character {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -72,13 +72,13 @@
   text-align: left;
 }
 
-.1l3r .loading {
+.t1l3r .loading {
   position: absolute;
   width: 100%;  
   height: 100%; 
 }
 
-.1l3r .loading cover-image {
+.t1l3r .loading cover-image {
   position: absolute;
   top: calc(50% - 15px);
   left: calc(50% - 15px);
