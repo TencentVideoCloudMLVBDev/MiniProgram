@@ -1,5 +1,5 @@
 <template name="1u3dtemplate">
-		<view class="t1u3d videoview" wx:if="{{!isCaster}}">
+		<view class="1u3d videoview" wx:if="{{!isCaster}}">
 				<view class="player-caster-box">
 						<view class="player-caster-item" wx:for="{{presenter}}" wx:key="userID">
 								<view class="poster">
@@ -54,7 +54,7 @@
 				</view>
 		</view>
 		<!-- 自己是主播 -->
-		<view class="t1u3d videoview" wx:if="{{isCaster}}">
+		<view class="1u3d videoview" wx:if="{{isCaster}}">
 				<view class="pusher-box">
 						<live-pusher wx:if="{{pushURL}}" id="rtcpusher" autopush enable-camera="{{enableCamera}}" mode="RTC" url="{{pushURL}}" aspect="{{aspect}}" min-bitrate="{{minBitrate}}" max-bitrate="{{maxBitrate}}" audio-quality="high" beauty="{{beauty}}" whiteness="{{whiteness}}" muted="{{muted}}" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" background-mute="{{true}}" debug="{{debug}}" bindstatechange="onPush" binderror="onError"></live-pusher>
 				</view>

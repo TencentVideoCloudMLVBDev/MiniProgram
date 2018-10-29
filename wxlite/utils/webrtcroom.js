@@ -86,8 +86,7 @@ var webrtcroom = {
       url: '/get_room_list',
       data: {
         index: index,
-        count: count,
-        roomType: 'trtc'
+        count: count
       },
       success: success,
       fail: fail
@@ -100,8 +99,7 @@ var webrtcroom = {
       url: '/create_room',
       data: {
         userID: userID,
-        roomInfo: roomInfo,
-        roomType: 'trtc'
+        roomInfo: roomInfo
       },
       
       success: function (res) {
