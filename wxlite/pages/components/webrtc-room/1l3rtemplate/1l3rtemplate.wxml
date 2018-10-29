@@ -1,5 +1,5 @@
 <template name="1l3rtemplate">
-    <view class="1l3r videoview">
+    <view class="t1l3r videoview">
         <view class="pusher-box">
             <live-pusher wx:if="{{pushURL}}" id="rtcpusher" autopush mode="RTC" url="{{pushURL}}" aspect="{{aspect}}" min-bitrate="{{minBitrate}}" max-bitrate="{{maxBitrate}}" audio-quality="high" beauty="{{beauty}}" muted="{{muted}}" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" background-mute="{{true}}" debug="{{debug}}" bindstatechange="onPush" binderror="onError">
                 <cover-image class="character" src="/pages/Resources/mask.png"></cover-image>
