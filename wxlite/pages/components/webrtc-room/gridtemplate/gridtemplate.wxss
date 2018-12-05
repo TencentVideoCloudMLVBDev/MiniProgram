@@ -1,8 +1,10 @@
 .grid.videoview {
   background-repeat:no-repeat;
   background-size: cover;
+  padding-left: 3.5vw;
   width: 100%;
   height: 100%;
+  position: absolute;
 }
 
 .grid .pusher-box {

@@ -5,4 +5,5 @@
   height: 100%;
 }
 
+@import "./floattemplate/floattemplate.wxss";
 @import "./gridtemplate/gridtemplate.wxss";

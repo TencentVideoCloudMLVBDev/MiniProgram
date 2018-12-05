@@ -1,13 +1,13 @@
 function Line(user, option) {
 	this.user = user;
 	this.type = 'line';
-	this.seq = option.seq; // seq 唯一编号
+	this.seq = option.belongSeq; // seq 唯一编号
 	this.show = option.show; // 是否展示
 	this.select = false; // 是否被选了
 	this.color = option.color;
 	this.time = parseInt(+ new Date() / 1000, 10);
 	this.thin = option.thin;
-	this.startSeq = option.seq; // 开始点seq
+	this.startSeq = option.belongSeq; // 开始点seq
 	this.endSeq = 0; // 结束点seq
   this.belongSeq = option.belongSeq;
 	// 每一个点  {x, y, seq}

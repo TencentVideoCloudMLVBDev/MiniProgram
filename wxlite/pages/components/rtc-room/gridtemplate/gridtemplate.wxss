@@ -1,11 +1,13 @@
-.videoview {
+.grid.videoview {
   background-repeat:no-repeat;
   background-size: cover;
+  padding-left: 3.5vw;
   width: 100%;
   height: 100%;
+  position: absolute;
 }
 
-.pusher-box {
+.grid .pusher-box {
 	position: relative; 
 	display: inline-block; 
 	overflow: hidden;
@@ -16,12 +18,12 @@
   vertical-align: top;
 }
 
-live-pusher {
+.grid live-pusher {
   width: 100%;
 	height: 100%; 
 }
 
-.player-box {
+.grid .player-box {
 	position: relative; 
 	display: inline-block; 
 	overflow: hidden;
@@ -31,17 +33,17 @@ live-pusher {
   margin-bottom: 2vw;
   vertical-align: top;
 }
-.player-box:nth-child(2),.player-box:nth-child(4) {
+.grid .player-box:nth-child(2), .grid .player-box:nth-child(4) {
    margin-left: 1vw; 
 } 
-.poster {
+.grid .poster {
 	position: absolute;  
     width: 100%;
 	height: 100%; 
 	background-color: #000;
   opacity:0.55;
 }
-.set {
+.grid .set {
   position: absolute;
   width: 32px;
   height: 56px;
@@ -49,11 +51,11 @@ live-pusher {
   left: 50%;
   margin: -28px 0 0 -16px;
 }
-live-player {
+.grid live-player {
   width: 100%;
 	height: 100%; 
 }
-.character {
+.grid .character {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -64,12 +66,12 @@ live-player {
   line-height: 10vw;
   text-align: left;
 }
-.loading {
+.grid .loading {
   position: absolute;
   width: 100%;  
   height: 100%; 
 }
-.loading cover-image {
+.grid .loading cover-image {
   position: absolute;
   top: calc(50% - 15px);
   left: calc(50% - 15px);

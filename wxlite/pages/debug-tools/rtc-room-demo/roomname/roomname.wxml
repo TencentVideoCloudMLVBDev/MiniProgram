@@ -1,0 +1,34 @@
+<!--pages/rtmproom/roomname/roomname.wxml-->
+<view class='container-box'>
+  <view class='title' style='padding-top:{{(headerHeight + statusBarHeight)/2 - 12}}px'>
+    <text>视频通话</text>
+  </view>
+  <view class="input-box">
+    <input value="{{roomName}}" maxlength="20" bindinput='bindRoomName' placeholder="输入房间名称" placeholder-style="color:#ffffff;opacity: 0.55;"/>
+  </view>
+  <radio-group class="radio-group" bindchange="radioChange">
+    <label class="radio">
+      <radio color='#006eff' value="float" checked='true' id="float"/>嵌套布局
+    </label>
+    <label class="radio">
+      <radio color='#006eff' value="grid"  id="grid"/>网格布局
+    </label>
+  </radio-group>
+  <view class="PrevImgBox">
+    <view class="PrevCell">
+      <label for="float">
+        <image src="/assets/float.png" style="width:200rpx;height:228rpx" class="{{template==='float'?'selected':''}}"/>
+      </label>
+    </view>
+    <view class="PrevCell">
+      <label for="grid">
+        <image src="/assets/grid.png"  style="width:200rpx;height:228rpx" class="{{template==='grid'?'selected':''}}"/>
+      </label>
+    </view>
+
+  </view>
+</view>
+<view class='bottom-btn'> 
+  <button type="primary" bindtap="create" hover-class="none">确定创建并进入房间</button>
+</view> 
+<cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image>

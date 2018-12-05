@@ -1,35 +1,29 @@
 {
-    "pages": [
-        "pages/main/main",
-        "pages/push/push",
-        "pages/push/playqr/playqr",
-        "pages/play/play",
-        "pages/vodplay/vodplay",
-        "pages/rtplay/rtplay",
-        "pages/multiroom/room/room",
-        "pages/multiroom/roomlist/roomlist",
-        "pages/multiroom/roomname/roomname",
-        "pages/doubleroom/roomlist/roomlist",
-        "pages/doubleroom/room/room",
-        "pages/doubleroom/roomname/roomname",
-        "pages/live-phone/roomlist/roomlist",
-        "pages/live-phone/roomname/roomname",
-        "pages/live-pc/roomlist/roomlist",
-        "pages/live-pc/room/liveroom",
-        "pages/live-phone/room/liveroom",
-        "pages/live-pc/roomname/roomname",
-        "pages/webrtcroom/room/room",
-        "pages/webrtcroom/roomlist/roomlist",
-        "pages/webrtcroom/roomname/roomname"
-    ],
-    "networkTimeout": {
-        "request": 60000
-    },
-    "window": {
-        "backgroundColor": "#888",
-        "backgroundTextStyle": "dark",
-        "navigationBarBackgroundColor": "#000",
-        "navigationBarTitleText": "腾讯视频云",
-        "navigationBarTextStyle": "#fff"
-    }
+  "pages": [
+    "pages/main/main",
+    "pages/debug-tools/debug-tools",
+    "pages/debug-tools/play/play",
+    "pages/debug-tools/push/push-config/push-config",
+    "pages/debug-tools/push/push",
+    "pages/debug-tools/rtc-room-demo/room/room",
+    "pages/debug-tools/rtc-room-demo/roomlist/roomlist",
+    "pages/debug-tools/rtc-room-demo/roomname/roomname",
+    "pages/live-room-demo/room/liveroom",
+    "pages/live-room-demo/roomlist/roomlist",
+    "pages/live-room-demo/roomname/roomname",
+    "pages/webrtc-room-demo/room/room",
+    "pages/webrtc-room-demo/join-room-by-id/joinRoomById",
+    "pages/debug-tools/rtplay/rtplay"
+  ],
+  "networkTimeout": {
+    "request": 60000
+  },
+  "window": {
+    "backgroundColor": "#888",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "腾讯视频云",
+    "navigationBarTextStyle": "#fff",
+    "navigationStyle": "custom"
+  }
 }

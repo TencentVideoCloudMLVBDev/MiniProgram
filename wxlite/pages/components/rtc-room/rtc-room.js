@@ -1,16 +1,21 @@
 var rtcroom = require('../../../utils/rtcroom.js')
 var report = require('../../../utils/report.js')
+const app = getApp()
 Component({
+    options: {
+      multipleSlots: true // 启用多slot支持
+    },
     properties: {
         roomID: {type: String, value: ''},
         roomInfo: {type: String, value: ''},
         template: {type: String, value: '', observer: function(newVal, oldVal) {this.init(newVal)}},        //使用的界面模版
-        beauty: {type: String, value: 5},           //美颜程度，取值为0~9
+        beauty: {type: Number, value: 5},           //美颜程度，取值为0~9
         aspect: {type: String, value: '3:4'},       //设置画面比例，取值为'3:4'或者'9:16'
         minBitrate: {type: Number, value: 200},     //设置码率范围为[minBitrate,maxBitrate]，四人建议设置为200~400
         maxBitrate: {type: Number, value: 400},
         muted: {type: Boolean, value: false},       //设置推流是否静音
         debug: {type: Boolean, value: false},       //是否显示log
+        enableCamera: {type: Boolean,value: true},
         // frontCamera: {type: Boolean, value: true, observer: function (newVal, oldVal) { this.switchCamera(); }},  //设置前后置摄像头，true表示前置
     },
     data: {
@@ -30,6 +35,8 @@ Component({
         play_stream_end: 0,
         play_stream_tap: 0,
         play_info: '',
+        headerHeight: app.globalData.headerHeight,
+        statusBarHeight: app.globalData.statusBarHeight,
 
         ERROR_GET_PUSH_URL: -1,  //获取推流失败
         ERROR_CREATE_ROOM: -2,   //创建房间失败
@@ -39,6 +46,7 @@ Component({
         ERROR_PUSH_DISCONNECT: -6,   //推流连接断开
         ERROR_CAMERA_MIC_PERMISSION: -7,  //获取不到摄像头或者麦克风权限
         ERROR_REACH_MAX_MEMBERS: -8,      //房间到达最大人数限制
+        ERROR_PLAY_DISCONNECT: -9,   //多次拉流失败
     },
 
     ready: function(){
@@ -75,7 +83,7 @@ Component({
                         template: newVal
                     });
                     break;
-            }
+          };
         },
 
         start: function() {
@@ -118,11 +126,13 @@ Component({
                             if (res.pushers[i]) {
                                 var pusher = res.pushers[i];
                                 pusher.loading = false;
-                                pusher.playerContext = wx.createLivePlayerContext(pusher.userID);
+                                pusher.playerContext = wx.createLivePlayerContext(pusher.userID, self);
                                 self.data.members[i] = pusher;
                             }
                         }
+                        setTimeout(() => {
                         self.setData({ members: self.data.members });
+                        }, 200);
                     },
                     fail: function(){}
                 });
@@ -264,7 +274,7 @@ Component({
         },
 
         postEvent: function(tag, code, detail) {
-            self.triggerEvent('onRoomEvent', {
+          self.triggerEvent('onRoomEvent', {
                 tag: tag,
                 code: code,
                 detail: detail
@@ -314,7 +324,7 @@ Component({
                 }
                 if (!hasPlay && emptyIndex != -1) {
                     val.loading = false;
-                    val.playerContext = wx.createLivePlayerContext(val.userID);
+                    val.playerContext = wx.createLivePlayerContext(val.userID, self);
                     self.data.members[emptyIndex] = val;
                 }
             });
@@ -402,6 +412,7 @@ Component({
             }
             case 5000: {
                 console.log('收到5000: ', code);
+                self.postErrorEvent(5000, '收到退房错误码');
                 // 收到5000就退房
                 self.exitRoom();
                 break;
@@ -450,6 +461,12 @@ Component({
                         str_play_info: self.data.play_info
                         });
                     }
+                    break;
+                  }
+                  case -2301: {
+                    // 多次拉流失败
+                    console.error('多次拉流失败')
+                    // self.postErrorEvent(self.data.ERROR_PLAY_DISCONNECT, '多次拉流失败');
                     break;
                   }
                   default: {

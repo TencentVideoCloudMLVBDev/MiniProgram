@@ -1,4 +1,5 @@
 // pages/main/main.js
+const app = getApp()
 Page({
 
   /**
@@ -8,14 +9,13 @@ Page({
     canShow: 0,
     tapTime: '',		// 防止两次点击操作间隔太快
     entryInfos: [
-      { icon: "../Resources/liveroom.png", title: "手机直播", desc: "<live-room>", navigateTo: "../live-phone/roomlist/roomlist" },
-      { icon: "../Resources/liveroom.png", title: "PC直播", desc: "<live-room>", navigateTo: "../live-pc/roomlist/roomlist" },
-      { icon: "../Resources/doubleroom.png", title: "双人通话", desc: "<rtc-room>", navigateTo: "../doubleroom/roomlist/roomlist" },
-      { icon: "../Resources/multiroom.png", title: "多人通话", desc: "<rtc-room>", navigateTo: "../multiroom/roomlist/roomlist" },
-      { icon: "../Resources/push.png", title: "RTMP推流", desc: "<live-pusher>", navigateTo: "../push/push" },
-      { icon: "../Resources/play.png", title: "直播播放", desc: "<live-player>", navigateTo: "../play/play" },
-      { icon: "../Resources/multiroom.png", title: "TRTC", desc: "<webrtc-room>", navigateTo: "../webrtcroom/roomlist/roomlist" },
-    ]
+      { icon: "../Resources/play.png", title: "美女直播", desc: "<live-room>", navigateTo: "../live-room-demo/roomlist/roomlist" },
+      { icon: "../Resources/multiroom.png", title: "视频通话", desc: "<webrtc-room>", navigateTo: "../webrtc-room-demo/join-room-by-id/joinRoomById"},
+      { icon: "../Resources/debug-tools.png", title: "调试工具", desc: "<debug-tool>", navigateTo: "../debug-tools/debug-tools" }
+
+    ],
+    headerHeight: app.globalData.headerHeight, //
+    statusBarHeight: app.globalData.statusBarHeight,
   },
 
   onEntryTap: function (e) {

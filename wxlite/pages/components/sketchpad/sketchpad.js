@@ -204,6 +204,38 @@ Component({
               }
             }
           });
+
+        } else if (action.action == 9) {
+          if (!action.moves)
+            return;
+          action.moves.forEach((move) => {
+            move.x = move.x;
+            move.y = move.y;
+            for (var i = 0; i < this.data.userData[boardId][move.uid].length; i++) {
+              var item = this.data.userData[boardId][move.uid][i];
+              if (item.type == 'line' && item.startSeq == move.seq) {
+                // 移动这条线
+                var movex = move.x - item.lines[0].x;
+                var movey = move.y - item.lines[0].y;
+                item.border.maxX += movex;
+                item.border.minX += movex;
+                item.border.maxY += movey;
+                item.border.minY += movey;
+                item.lines.forEach(function (line) {
+                  line.x += movex;
+                  line.y += movey;
+                })
+              } else if (item.type == 'graph' && item.startPoint.seq == move.seq) {
+                // 移动graph
+                var movex = move.x - item.startPoint.x;
+                var movey = move.y - item.startPoint.y;
+                item.startPoint.x += movex;
+                item.startPoint.y += movey;
+                item.endPoint.x += movex;
+                item.endPoint.y += movey;
+              }
+            }
+          })
         } else if (action.action == 10 || action.action == 11 || action.action == 12) {
           let list = {
             10: 'line',

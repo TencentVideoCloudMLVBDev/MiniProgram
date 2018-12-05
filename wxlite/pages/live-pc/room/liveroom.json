@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "互动课堂",
-  "usingComponents": {
-    "liveroom": "/pages/components/live-room/liveroom",
-    "sketchpad": "/pages/components/sketchpad/sketchpad"
-  }
-}

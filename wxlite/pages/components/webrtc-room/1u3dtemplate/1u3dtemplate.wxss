@@ -39,7 +39,7 @@
   position: relative;
   overflow: hidden;
   flex: 1;
-  height: calc(100vw/3 - 2vw/3);
+  height: calc((100vw/3 - 2vw/3)* 4/3);
   text-align: center;
   vertical-align: top;
 }
@@ -98,16 +98,16 @@
 
 .t1u3d .player-sound {
   position: absolute;
-  width: 8vw;
-  height: 8vw;
+  width: 10vw;
+  height: 10vw;
   right: 0;
-  bottom: 0;
+  bottom: 2vw;
 }
 
 .t1u3d .player-camera {
   position: absolute;
-  width: 8vw;
-  height: 8vw;
+  width: 10vw;
+  height: 10vw;
   right: 0;
   bottom: 12vw;
 }

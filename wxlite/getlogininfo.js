@@ -12,17 +12,17 @@ function getLoginInfo(options) {
       if (res.code) {
         console.log('获取code成功',res.code);
         options.code = res.code;
-        // 获取用户信息
-        wx.getUserInfo({
-          withCredentials: false,
-          success: function (ret) {
-            options.userName = ret.userInfo.nickName;
-            proto_getLoginInfo(options);
-          },
-          fail: function() {
-            proto_getLoginInfo(options);
-          }
-        });
+        proto_getLoginInfo(options);
+        // 获取用户信息,该接口微信有调整，如果需要使用，请查看https://developers.weixin.qq.com/miniprogram/dev/api/open.html
+        // wx.getUserInfo({
+        //   withCredentials: false,
+        //   success: function (ret) {
+        //     options.userName = ret.userInfo.nickName;
+        //   },
+        //   fail: function() {
+        //     proto_getLoginInfo(options);
+        //   }
+        // });
       } else {
         console.log('获取用户登录态失败！' + res.errMsg);
         options.fail && options.fail({

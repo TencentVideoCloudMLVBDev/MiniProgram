@@ -1,0 +1,7 @@
+.container-box {
+  background-image: url(https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png);
+  background-color: #333;
+  background-repeat:no-repeat;
+  background-size: cover;
+  height: 100vh;
+}

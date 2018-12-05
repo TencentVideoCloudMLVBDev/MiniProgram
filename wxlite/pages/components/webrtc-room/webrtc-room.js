@@ -1,12 +1,20 @@
 const imHandler = require('./im_handler.js');
 const webim = require('../../../utils/webim_wx');
 const CONSTANT = require('./config.js');
+const app = getApp()
 
 Component({
+  options: {
+    multipleSlots: true // 启用多slot支持
+  },
   properties: {
     roomID: {
       type: Number,
       value: 0
+    },
+    roomName: {
+      type: String,
+      value: ''
     },
     userID: {
       type: String,
@@ -118,6 +126,8 @@ Component({
     maxMembers: 3,
     self: {},
     hasExitRoom: true,
+    headerHeight: app.globalData.headerHeight,
+    statusBarHeight: app.globalData.statusBarHeight,
     creator: '',
     // 记录live-player的声音状态， 默认都是打开声音状态(false和undefined)
     playerMutedStatus: {
@@ -314,6 +324,11 @@ Component({
       }
     },
 
+    onBack: function () {
+      wx.navigateBack({
+        delta: 1
+      });
+    },
     /**
      * 点击切换player的声音事件
      * @param {*} e 
@@ -498,19 +513,28 @@ Component({
           var roomSig = JSON.stringify(res.data["RspBody"]);
           var pushUrl = "room://cloud.tencent.com?sdkappid=" + sdkAppID + "&roomid=" + roomID + "&userid=" + userID + "&roomsig=" + encodeURIComponent(roomSig);
 
-          // 支持纯音频推流
-          if (self.data.pureAudioPushMod) {
+          // 如果有配置纯音频推流或者recordId参数
+          if (self.data.pureAudioPushMod || self.data.recordId) {
             var bizbuf = {
               Str_uc_params: {
-                pure_audio_push_mod: self.data.pureAudioPushMod,
-                record_id: null
+                pure_audio_push_mod: 0,
+                record_id: 0
               }
             }
+            // 纯音频推流
+            if (self.data.pureAudioPushMod) {
+              bizbuf.Str_uc_params.pure_audio_push_mod = self.data.pureAudioPushMod
+            } else {
+              delete bizbuf.Str_uc_params.pure_audio_push_mod;
+            }
+
             // 自动录制时业务自定义id
             if (self.data.recordId) {
               bizbuf.Str_uc_params.record_id = self.data.recordId
+            } else {
+              delete bizbuf.Str_uc_params.record_id;
             }
-            pushUrl += '&bizbuf=' + JSON.stringify(bizbuf);
+            pushUrl += '&bizbuf=' + encodeURIComponent(JSON.stringify(bizbuf));
           }
 
           console.log("roomSigInfo", roomID, userID, roomSig, pushUrl);
@@ -625,6 +649,19 @@ Component({
           //   var player = wx.createLivePlayerContext(self.data.members[i].userID);
           //   player && player.stop();
           // }
+          var userid = self.data.members[i].userID;
+          if (userid) {
+            if (self.data.playerVideoStatus[userid]) {
+              delete self.data.playerVideoStatus[userid];
+            }
+            if (self.data.playerMutedStatus[userid]) {
+              delete self.data.playerMutedStatus[userid];
+            }
+          }
+          self.setData({
+            playerVideoStatus: self.data.playerVideoStatus,
+            playerMutedStatus: self.data.playerMutedStatus,
+          });
           self.data.members[i] = {};
         }
       }

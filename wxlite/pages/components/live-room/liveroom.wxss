@@ -174,4 +174,5 @@ live-player {
   height: 8vw;
 }
 
-@import "./vertical1v3template/vertical1v3.wxss";
+@import "/app.wxss";
+@import "./floattemplate/floattemplate.wxss";

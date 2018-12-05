@@ -1,5 +1,6 @@
 var liveroom = require('../../../utils/liveroom.js');
 var config = require('../../../config.js');
+const app = getApp()
 
 // 没使用到
 var errorCode = [
@@ -19,6 +20,9 @@ var gListMenus = [
     {name: '连麦'}
 ]
 Component({
+    options: {
+      multipleSlots: true // 启用多slot支持
+    },
     properties: {
         role: { type: String, value: 'audience' },
         roomid: {
@@ -28,7 +32,7 @@ Component({
         },
         roomname: { type: String, value: 'undefined' },
         debug: { type: Boolean, value: false },
-        template: { type: String, value: '1v3' },
+        template: { type: String, value: 'float' },
         beauty: { type: Number, value: 5 },
         muted: {type: Boolean, value: false},
         pureaudio: {type: Boolean, value: false},
@@ -49,8 +53,8 @@ Component({
         mainPusherInfo: {
             url: '',
             aspect: '3:4',
-            minBitrate: 0,
-            maxBitrate: 0,
+            minBitrate: 850,
+            maxBitrate: 850,
             puserID: '',
         },
         audience: {
@@ -72,7 +76,9 @@ Component({
         members: [],
         visualPlayers: [],
         requestLinking: false,
-        mode: 'SD'
+        mode: 'RTC',
+        headerHeight: app.globalData.headerHeight,
+        statusBarHeight: app.globalData.statusBarHeight,
     },
 
     methods: {
@@ -218,13 +224,13 @@ Component({
                     success: function (ret) {
                         console.log('getPushURL 成功，', ret);
                         self.data.mainPusherInfo.url = ret.pushURL;
-                        console.log('设置推流模式为:SD');
+                        // console.log('设置推流模式为:SD');
                         self.setData({
-                            mainPusherInfo: self.data.mainPusherInfo,
-                            mode: 'SD'
+                            mainPusherInfo: self.data.mainPusherInfo
+                            // mode: 'SD'
                         }, function () {
                             self.setupLiveRoomListener();
-                            self.data.pusherContext = wx.createLivePusherContext('pusher');
+                            self.data.pusherContext = wx.createLivePusherContext('pusher', self);
                             console.log('创建 pusherContext：', self.data.pusherContext);
                             //开始推流
                             self.data.pusherContext.start();
@@ -323,8 +329,8 @@ Component({
            
             console.log('设置推流模式为:RTC');
             self.setData({
-                members: temp,
-                mode: 'RTC'
+                members: temp
+                // mode: 'RTC'
             }, function () {
                 temp.forEach(p => {
                     if (p.context) return;
@@ -351,17 +357,17 @@ Component({
                 }
             }
 
-            var mode = 'SD';
-            for (var i=0; i<members.length; ++i) {
-                if (members[i].userID) {
-                    mode = 'RTC';
-                }
-            }
-            console.log('设置推流模式为:', mode);
+            // var mode = 'SD';
+            // for (var i=0; i<members.length; ++i) {
+            //     if (members[i].userID) {
+            //         mode = 'RTC';
+            //     }
+            // }
+            // console.log('设置推流模式为:', mode);
 
             self.setData({
-                members: members,
-                mode: mode
+                members: members
+                // mode: mode
             }, () => {
                 console.log('members after onPusherQuit: ', self.data.members)
             })
@@ -521,7 +527,7 @@ Component({
                 maxCache: 3,
                 minCache: 1,
                 loading: false,
-                objectFit: 'contain',
+                objectFit: 'fillCrop',
                 userName: self.data.audience.pusherName
             }]
             return new Promise((resolve) => {
@@ -543,8 +549,6 @@ Component({
                 mute: false,
                 url: self.data.audience.accelerateUrl,
                 mode: 'RTC',
-                maxCache: 0.3,
-                minCache: 0.1,
                 loading: false,
                 objectFit: 'fillCrop',                
                 userName: self.data.audience.pusherName
@@ -553,6 +557,11 @@ Component({
                 self.setData({
                     visualPlayers: players
                 }, function () {
+                    players[0].minCache = 0.1;
+                    players[0].maxCache = 0.3;
+                    self.setData({
+                        visualPlayers: players
+                    })
                     // self.data.playerContext = wx.createLivePlayerContext('player', self);
                     resolve()
                 })
@@ -594,13 +603,13 @@ Component({
                 self.data.linkPusherInfo.url = url;
                 self.data.members.splice(0, 1);
 
-                console.log('设置推流模式为:RTC');
+                // console.log('设置推流模式为:RTC');
                 self.setData({
                     members: self.data.members,
-                    linkPusherInfo: self.data.linkPusherInfo,
-                    mode: 'RTC'
+                    linkPusherInfo: self.data.linkPusherInfo
+                    // mode: 'RTC'
                 }, function () {
-                    self.data.pusherContext = wx.createLivePusherContext('audience_pusher');
+                    self.data.pusherContext = wx.createLivePusherContext('audience_pusher', self);
                     console.log('startLinkPush.创建 pusherContext：', self.data.pusherContext);
                     self.data.pusherContext.start();
                     resolve()
@@ -880,7 +889,17 @@ Component({
                     }
                     break;
                 };
-
+                case -1307: {
+                    console.error('推流连接断开: ', ret.detail.code);
+                    self.exit();
+                    self.data.exit = -1307;
+                    self.triggerEvent('RoomEvent', {
+                        tag: 'error',
+                        code: -1307,
+                        detail: '推流连接断开'
+                    })
+                    break;
+                }
                 case 5000: {
                     console.log('收到5000: ', ret.detail.code);
                     // 收到5000就退房
@@ -911,6 +930,23 @@ Component({
 
         onMainPlayState(e) {
             console.log('===> onMainPlayState: ', e)
+            var self = this;
+            //主播拉流失败不抛错误事件出去 
+            if (self.data.isCaster == true) {
+              return;
+            }
+            switch (e.detail.code) {
+              case -2301: {
+                // 多次拉流失败
+                console.error('多次拉流失败')
+                self.triggerEvent('RoomEvent', {
+                  tag: 'error',
+                  code: e.detail.code,
+                  detail: '多次拉流失败'
+                });
+                break;
+              };
+            }
         },
 
         onMainPlayError(e) {
@@ -943,35 +979,35 @@ Component({
 
         onPushersChange() {
           var self = _this;
-          if (self && self.data && !self.data.isCaster) {
-            //观众端
-            liveroom.getPushers({
-              success: function (res) {
-                var pushers = res.data.pushers
-                if (pushers && pushers.length > 1) {
-                  //连麦状态下，因为后台混流，会引入约2s的时延，所以这里把缓冲区设为1-3s，以保持和非连麦状态下的时延基本一致
-                  console.log("处于连麦状态，改变播放缓冲区时长为1-3s");
-                  if (self.data.visualPlayers && self.data.visualPlayers.length > 0) {
-                    var player = self.data.visualPlayers[0];
-                    player.maxCache = 3;
-                    self.setData({
-                      visualPlayers: self.data.visualPlayers
-                    })
-                  }
-                } else {
-                  console.log("处于非连麦状态，改变播放缓冲区时长为1-5s");
-                  if (self.data.visualPlayers && self.data.visualPlayers.length > 0) {
-                    var player = self.data.visualPlayers[0];
-                    player.maxCache = 5;
-                    self.setData({
-                      visualPlayers: self.data.visualPlayers
-                    })
-                  }
-                }
-              },
-              fail: function (res) { }
-            })
-          } 
+        //   if (self && self.data && !self.data.isCaster) {
+        //     //观众端
+        //     liveroom.getPushers({
+        //       success: function (res) {
+        //         var pushers = res.data.pushers
+        //         if (pushers && pushers.length > 1) {
+        //           //连麦状态下，因为后台混流，会引入约2s的时延，所以这里把缓冲区设为1-3s，以保持和非连麦状态下的时延基本一致
+        //           console.log("处于连麦状态，改变播放缓冲区时长为1-3s");
+        //           if (self.data.visualPlayers && self.data.visualPlayers.length > 0) {
+        //             var player = self.data.visualPlayers[0];
+        //             player.maxCache = 3;
+        //             self.setData({
+        //               visualPlayers: self.data.visualPlayers
+        //             })
+        //           }
+        //         } else {
+        //           console.log("处于非连麦状态，改变播放缓冲区时长为1-5s");
+        //           if (self.data.visualPlayers && self.data.visualPlayers.length > 0) {
+        //             var player = self.data.visualPlayers[0];
+        //             player.maxCache = 5;
+        //             self.setData({
+        //               visualPlayers: self.data.visualPlayers
+        //             })
+        //           }
+        //         }
+        //       },
+        //       fail: function (res) { }
+        //     })
+        //   } 
         }
     },
 
@@ -1002,6 +1038,6 @@ Component({
         var self = this;
         _this = null;
         self.stop();
-    }
+    },
 
 })

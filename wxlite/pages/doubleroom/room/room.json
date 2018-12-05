@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "多人音视频",
-  "usingComponents": {
-    "rtc-room": "/pages/components/rtc-room/rtc-room"
-  }
-}

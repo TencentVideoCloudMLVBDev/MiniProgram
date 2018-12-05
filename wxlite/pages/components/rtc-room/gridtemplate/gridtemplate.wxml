@@ -1,7 +1,8 @@
 <template name='gridtemplate'>
-    <view class='videoview'>
+    <slot name="grid"></slot>
+    <view class='grid videoview' style='margin-top:calc(5vw + {{headerHeight}}px);height:calc(100% - 5vw - {{headerHeight}}px)'>
         <view class="pusher-box">
-            <live-pusher wx:if="{{pushURL}}"
+            <live-pusher
                 id="rtcpusher"
                 autopush
                 mode="RTC"
@@ -17,8 +18,6 @@
                 debug="{{debug}}"
                 bindstatechange="onPush"
                 binderror="onError">
-                <cover-image  class='character' src="/pages/Resources/mask.png"></cover-image>
-                <cover-view class='character' style='padding: 0 5px;'>我</cover-view>
             </live-pusher>
         </view>
         <view class="player-box" wx:for="{{members}}" wx:key="userID"> 
@@ -40,8 +39,6 @@
                 <cover-view class='loading' wx:if="{{item.loading}}">
                     <cover-image src="/pages/Resources/loading_image0.png"></cover-image>
                 </cover-view>
-                <cover-image  class='character' src="/pages/Resources/mask.png"></cover-image>
-                <cover-view class='character' style='padding: 0 5px;'>{{item.userName}}</cover-view>
             </live-player>  
         </view> 
     </view>
